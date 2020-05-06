@@ -2,8 +2,8 @@ package SFF8636
 
 import (
 	"errors"
-	"gitlab.com/wobcom/golang-ethtool/eeprom"
-	"gitlab.com/wobcom/golang-ethtool/eeprom/sff8024"
+	"gitlab.com/wobcom/ethtool/eeprom"
+	"gitlab.com/wobcom/ethtool/eeprom/sff8024"
 	"strings"
 )
 

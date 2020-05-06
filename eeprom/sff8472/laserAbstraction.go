@@ -2,7 +2,7 @@ package SFF8472
 
 import (
 	"errors"
-	"gitlab.com/wobcom/golang-ethtool/eeprom"
+	"gitlab.com/wobcom/ethtool/eeprom"
 )
 
 type Laser struct {

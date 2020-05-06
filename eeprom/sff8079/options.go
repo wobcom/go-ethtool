@@ -1,6 +1,6 @@
 package SFF8079
 
-import "gitlab.com/wobcom/golang-ethtool/eeprom"
+import "gitlab.com/wobcom/ethtool/eeprom"
 
 type Options struct {
 	PowerLevel3Requirement          bool

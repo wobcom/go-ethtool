@@ -1,7 +1,7 @@
 package SFF8636
 
 import (
-	"gitlab.com/wobcom/golang-ethtool/eeprom"
+	"gitlab.com/wobcom/ethtool/eeprom"
 )
 
 type ExtendedIdentifier struct {

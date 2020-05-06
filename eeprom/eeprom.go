@@ -1,7 +1,7 @@
 package eeprom
 
 import (
-	"gitlab.com/wobcom/golang-ethtool/eeprom/sff8024"
+	"gitlab.com/wobcom/ethtool/eeprom/sff8024"
 	"time"
 )
 

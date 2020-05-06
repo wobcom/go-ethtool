@@ -3,9 +3,9 @@ package ethtool
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"gitlab.com/wobcom/golang-ethtool/eeprom"
-	"gitlab.com/wobcom/golang-ethtool/eeprom/sff8472"
-	"gitlab.com/wobcom/golang-ethtool/eeprom/sff8636"
+	"gitlab.com/wobcom/ethtool/eeprom"
+	"gitlab.com/wobcom/ethtool/eeprom/sff8472"
+	"gitlab.com/wobcom/ethtool/eeprom/sff8636"
 	"unsafe"
 )
 
