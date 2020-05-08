@@ -1,7 +1,9 @@
-package SFF8636
+package sff8636
 
+// ChannelMonitors Real-time channel monitoring for each transmit and receive channel includes optical input power and Tx bias current.
 type ChannelMonitors [4]ChannelMonitor
 
+// ChannelMonitor Real-time channel monitoring data
 type ChannelMonitor struct {
 	RxPower Power
 	TxPower Power
@@ -26,6 +28,7 @@ var channelMonitorsMemoryMap = map[uint]func(*ChannelMonitors, byte, byte){
 	// 0x28-0x2F vendor specific
 }
 
+// NewChannelMonitors parses [48]byte into a new ChannelMonitors instance
 func NewChannelMonitors(raw [48]byte) *ChannelMonitors {
 	c := &ChannelMonitors{}
 

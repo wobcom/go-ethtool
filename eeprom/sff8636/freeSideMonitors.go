@@ -1,5 +1,6 @@
-package SFF8636
+package sff8636
 
+// FreeSideMonitors as defined in SFF-8636 rev 2.10a table 6-7
 type FreeSideMonitors struct {
 	Temperature   float64 `json:"temperature"`
 	SupplyVoltage float64 `json:"supplyVoltage"`
@@ -17,6 +18,7 @@ var freeSideMonitoringValuesMemoryMap = map[uint]func(*FreeSideMonitors, byte, b
 	// 0x08-0x0B vendor specific
 }
 
+// NewFreeSideMonitors parses [12]byte into a new FreeSideMonitors instance
 func NewFreeSideMonitors(raw [12]byte) *FreeSideMonitors {
 	f := &FreeSideMonitors{}
 

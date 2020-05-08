@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// OptionalThresholds Thresholds for optional Laser Temperature and TEC Current alarms and warnings as of SFF-8472 rev 12.3 Table 9-5
 type OptionalThresholds struct {
 	LaserTemperature AlarmThresholds
 	TecCurrent       AlarmThresholds
@@ -25,6 +26,7 @@ var optionalThresholdsMemoryMap = map[uint]func(*OptionalThresholds, byte, byte)
 	0x0E: func(o *OptionalThresholds, msb byte, lsb byte) { o.TecCurrent.HighAlarm = parseCurrent(msb, lsb) },
 }
 
+// NewOptionalThresholds parses [16]byte into a new OptionalThresholds instance
 func NewOptionalThresholds(raw [16]byte) *OptionalThresholds {
 	o := &OptionalThresholds{}
 	for byteOffset, callback := range optionalThresholdsMemoryMap {

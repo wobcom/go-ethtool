@@ -9,40 +9,47 @@ import (
 	"unsafe"
 )
 
-type EthtoolModinfo struct {
+type ethtoolModinfo struct {
 	Command    uint32
 	EepromType uint32
 	Length     uint32
 	Reserved   [8]uint32
 }
 
-type EthtoolEeprom struct {
+type ethtoolEeprom struct {
 	Command uint32
 	Magic   uint32
 	Offset  uint32
 	Length  uint32
-	Data    [EEPROM_MAX_LENGTH]byte
+	Data    [eepromMaxLength]byte
 }
 
 const (
-	ETHTOOL_GMODULEINFO   = 0x00000042 /* Get plug-in module information */
-	ETHTOOL_GMODULEEEPROM = 0x00000043 /* Get plug-in module eeprom */
-	ETHTOOL_GEEPROM       = 0x0000000b /* Get EEPROM data */
-	ETHTOOL_SEEPROM       = 0x0000000c /* Set EEPROM data. */
-	EEPROM_MAX_LENGTH     = 32768
+    // Get plug-in module information
+	getModuleInfoIoctl   = 0x00000042
+    // Get plug-in module eeprom
+	getModuleEepromIoctl = 0x00000043
+    // Get EEPROM data
+	getEepromDataIoctl   = 0x0000000b
+    // Set EEPROM data
+	setEepromDataIoctl   = 0x0000000c
+    // Maximum support eeprom length
+	eepromMaxLength      = 32768
 )
 
+// WriteEEPROM writes the given data to the given offset
+// Note that not all NIC drivers implement this IOCTL
+// and also note, that not all sections of an EEPROM are writeable
 func (i *Interface) WriteEEPROM(data []byte, offset uint32) error {
-	// TODO check lengths instead of letting ioctl fail
-	/* Retrieve magic cookie used to avoid accidental changes */
-	ethtoolEeprom := EthtoolEeprom{
-		Command: ETHTOOL_GEEPROM,
+	// Retrieve magic cookie used to avoid accidental changes
+	ethtoolEeprom := ethtoolEeprom{
+		Command: getEepromDataIoctl,
 		Offset:  offset,
 		Length:  uint32(len(data)),
 	}
 
 	if err := i.performIoctl(uintptr(unsafe.Pointer(&ethtoolEeprom))); err != nil {
-		return errors.Wrapf(err, "ioctl ETHTOOL_GEEPROM returned error")
+		return errors.Wrapf(err, "ioctl getEepromDataIoctl returned error")
 	}
 	fmt.Printf("read: %v\n", ethtoolEeprom.Data[0:ethtoolEeprom.Length])
 
@@ -51,10 +58,10 @@ func (i *Interface) WriteEEPROM(data []byte, offset uint32) error {
 		ethtoolEeprom.Data[i] = data[i]
 	}
 
-	ethtoolEeprom.Command = ETHTOOL_SEEPROM
+	ethtoolEeprom.Command = setEepromDataIoctl
 
 	if err := i.performIoctl(uintptr(unsafe.Pointer(&ethtoolEeprom))); err != nil {
-		return errors.Wrapf(err, "iotctl ETHTOOL_SEEPROM returend error")
+		return errors.Wrapf(err, "iotctl setEepromDataIoctl returend error")
 	}
 	return nil
 }
@@ -74,39 +81,39 @@ func (i *Interface) getEEPROM() (eeprom.EEPROM, error) {
 		return nil, errors.Wrapf(err, "Could not retrieve module raw data")
 	}
 
-	eepromType := eeprom.EEPROMType(ethtoolModInfo.EepromType)
+	eepromType := eeprom.Type(ethtoolModInfo.EepromType)
 	data := ethtoolEeprom.Data[:ethtoolModInfo.Length]
 
 	switch eepromType {
-	case eeprom.ETH_MODULE_SFF_8472:
-		return SFF8472.NewEEPROM(data)
-	case eeprom.ETH_MODULE_SFF_8436:
-		return SFF8636.NewEEPROM(data)
-	case eeprom.ETH_MODULE_SFF_8636:
-		return SFF8636.NewEEPROM(data)
+	case eeprom.TypeSFF8472:
+		return sff8472.NewEEPROM(data)
+	case eeprom.TypeSFF8436:
+		return sff8636.NewEEPROM(data)
+	case eeprom.TypeSFF8636:
+		return sff8636.NewEEPROM(data)
 	default:
 		return nil, errors.New(fmt.Sprintf("EEPROM Type %v not supported", eepromType.String()))
 	}
 }
 
-func (i *Interface) getEEPROMModuleInfo() (*EthtoolModinfo, error) {
-	ethtoolModInfo := &EthtoolModinfo{
-		Command: ETHTOOL_GMODULEINFO,
+func (i *Interface) getEEPROMModuleInfo() (*ethtoolModinfo, error) {
+	ethtoolModInfo := &ethtoolModinfo{
+		Command: getModuleInfoIoctl,
 	}
 	if err := i.performIoctl(uintptr(unsafe.Pointer(ethtoolModInfo))); err != nil {
-		return nil, errors.Wrapf(err, "Error running ioctl ETHTOOL_GMODULEINFO")
+		return nil, errors.Wrapf(err, "Error running ioctl getModuleInfoIoctl")
 	}
 	return ethtoolModInfo, nil
 }
 
-func (i *Interface) getModuleEEPROM(length uint32) (*EthtoolEeprom, error) {
-	ethtoolEeprom := &EthtoolEeprom{
-		Command: ETHTOOL_GMODULEEEPROM,
+func (i *Interface) getModuleEEPROM(length uint32) (*ethtoolEeprom, error) {
+	ethtoolEeprom := &ethtoolEeprom{
+		Command: getModuleEepromIoctl,
 		Length:  length,
 	}
 
 	if err := i.performIoctl(uintptr(unsafe.Pointer(ethtoolEeprom))); err != nil {
-		return nil, errors.Wrapf(err, "Error running ioctl ETHTOOL_GMODULEEEPROM")
+		return nil, errors.Wrapf(err, "Error running ioctl getModuleEepromIoctl")
 	}
 	return ethtoolEeprom, nil
 }

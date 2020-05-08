@@ -5,29 +5,31 @@ import (
 	"time"
 )
 
-type EEPROMType uint32
+// Type Standard the interface's EEPROM complies with
+type Type uint32
 
-/* EEPROM Standards for plug in modules */
+// EEPROM Standards for plug in modules
 const (
-	ETH_MODULE_SFF_8079 EEPROMType = 0x01
-	ETH_MODULE_SFF_8472 EEPROMType = 0x02
-	ETH_MODULE_SFF_8636 EEPROMType = 0x03
-	ETH_MODULE_SFF_8436 EEPROMType = 0x04
+	TypeSFF8079 Type = 0x01
+	TypeSFF8472 Type = 0x02
+	TypeSFF8636 Type = 0x03
+	TypeSFF8436 Type = 0x04
 )
 
-func (e EEPROMType) String() string {
-	return map[EEPROMType]string{
-		ETH_MODULE_SFF_8079: "SFF-8079",
-		ETH_MODULE_SFF_8472: "SFF-8472",
-		ETH_MODULE_SFF_8636: "SFF-8636",
-		ETH_MODULE_SFF_8436: "SFF-8436",
+func (e Type) String() string {
+	return map[Type]string{
+		TypeSFF8079: "SFF-8079",
+		TypeSFF8472: "SFF-8472",
+		TypeSFF8636: "SFF-8636",
+		TypeSFF8436: "SFF-8436",
 	}[e]
 }
 
+// EEPROM is a unified interface for eeproms complying with different standards
 type EEPROM interface {
-	GetIdentifier() SFF8024.Identifier
-	GetConnectorType() SFF8024.ConnectorType
-	GetEncoding() Encoding
+	GetIdentifier() sff8024.Identifier
+	GetConnectorType() sff8024.ConnectorType
+	GetEncoding() string
 	GetPowerClass() PowerClass
 	GetSignalingRate() float64
 	GetSupportedLinkLengths() map[string]float64
@@ -44,10 +46,7 @@ type EEPROM interface {
 	GetModuleVoltage() (Measurement, error)
 }
 
-type Encoding interface {
-	String() string
-}
-
+// Laser may provide realtime monitoring information
 type Laser interface {
 	SupportsMonitoring() bool
 	GetBias() (Measurement, error)
@@ -55,6 +54,7 @@ type Laser interface {
 	GetRxPower() (Measurement, error)
 }
 
+// Measurement a value read from a sensor, may provide alarm thresholds
 type Measurement interface {
 	GetValue() float64
 	GetUnit() string
@@ -62,6 +62,7 @@ type Measurement interface {
 	GetAlarmThresholds() (AlarmThresholds, error)
 }
 
+// AlarmThresholds warning / alarm thresholds for a given reading
 type AlarmThresholds interface {
 	GetHighAlarm() float64
 	GetHighWarning() float64

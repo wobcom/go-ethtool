@@ -1,34 +1,38 @@
-package SFF8636
+package sff8636
 
+// InterruptFlags as defined in SFF-8636 rev 2.10a table 6-4
 type InterruptFlags struct {
-	ChannelInterrupt       [4]ChannelInterrupt    `json:"channelsInterrupts"`
-	FreeSideInterruptFlags FreeSideInterruptFlags `json:"freeSideInterruptFlags"`
+	ChannelInterrupt       [4]ChannelInterrupt    
+	FreeSideInterruptFlags FreeSideInterruptFlags 
 }
 
+// FreeSideInterruptFlags freeside general interrupts
 type FreeSideInterruptFlags struct {
-	TemperatureAlarm       Alarm `json:"temperatureAlarm"`
-	TCReadinessFlag        bool  `json:"tcReadinessFlag"`
-	InitializationComplete bool  `json:"initializationComplete"`
-	VoltageAlarm           Alarm `json:"voltageAlarm"`
+	TemperatureAlarm       Alarm 
+	TCReadinessFlag        bool  
+	InitializationComplete bool  
+	VoltageAlarm           Alarm 
 }
 
+// ChannelInterrupt channel specific interrupts
 type ChannelInterrupt struct {
-	TxLOS           bool  `json:"txLOS"`
-	RxLOS           bool  `json:"rxLOS"`
-	AdaptiveEQFault bool  `json:"adaptiveEQFault"`
-	TxFault         bool  `json:"txFault"`
-	TxLOL           bool  `json:"txLOL"`
-	RxLOL           bool  `json:"rxLOL"`
-	RxPowerAlarm    Alarm `json:"rxPowerAlarm"`
-	TxPowerAlarm    Alarm `json:"txPowerAlarm"`
-	BiasAlarm       Alarm `json:"biasAlarm"`
+	TxLOS           bool  
+	RxLOS           bool 
+	AdaptiveEQFault bool
+	TxFault         bool 
+	TxLOL           bool 
+	RxLOL           bool 
+	RxPowerAlarm    Alarm
+	TxPowerAlarm    Alarm
+	BiasAlarm       Alarm
 }
 
+// Alarm interrupt flags
 type Alarm struct {
-	HighAlarm   bool `json:"highAlarm"`
-	HighWarning bool `json:"highWarning"`
-	LowAlarm    bool `json:"lowAlarm"`
-	LowWarning  bool `json:"lowWarning"`
+	HighAlarm   bool
+	HighWarning bool
+	LowAlarm    bool
+	LowWarning  bool
 }
 
 var interruptFlagsMemoryMap = map[uint]map[uint]func(*InterruptFlags, bool){
@@ -148,6 +152,7 @@ var interruptFlagsMemoryMap = map[uint]map[uint]func(*InterruptFlags, bool){
 	// 0x10-0x12: Vendor specific
 }
 
+// NewInterruptFlags parses [19]byte into a new InterruptFlags instance
 func NewInterruptFlags(raw [19]byte) *InterruptFlags {
 	i := &InterruptFlags{}
 	for byteIndex, bitmap := range interruptFlagsMemoryMap {

@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// Diagnostics as of SFF-8472
 type Diagnostics struct {
 	Temperature float64
 	Voltage     float64
@@ -16,6 +17,7 @@ var diagnosticsMemoryMap = map[uint]func(*Diagnostics, byte, byte){
 	0x08: func(d *Diagnostics, msb byte, lsb byte) { d.RxPower = parsePower(msb, lsb) },
 }
 
+// NewDiagnostics parses [10]byte into a new instance of Diagnostics
 func NewDiagnostics(raw [10]byte) *Diagnostics {
 	d := &Diagnostics{}
 	for byteOffset, callback := range diagnosticsMemoryMap {

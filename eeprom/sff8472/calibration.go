@@ -1,4 +1,4 @@
-package SFF8472
+package sff8472
 
 func (e *EEPROM) calibrate() {
 	e.Diagnostics = e.Diagnostics.calibrate(e.ExternalCalibrationConstants)

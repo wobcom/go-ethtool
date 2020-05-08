@@ -1,5 +1,6 @@
-package SFF8636
+package sff8636
 
+// Control functions 
 type Control struct {
 	ChannelControls      [4]ChannelControl
 	PowerClass8Enable    bool
@@ -10,15 +11,16 @@ type Control struct {
 	IntlLOSL             bool
 }
 
+// ChannelControl channel specific controls
 type ChannelControl struct {
-	TxDisable    bool       `json:"txDisable"`
-	RxRateSelect RateSelect `json:"rxRateSelect"`
-	TxRateSelect RateSelect `json:"txRateSelect"`
-	TxCDR        bool       `json:"txCDR"`
-	RxCDR        bool       `json:"rxCDR"`
+	TxDisable    bool
+	RxRateSelect RateSelect
+	TxRateSelect RateSelect
+	TxCDR        bool
+	RxCDR        bool
 }
 
-// TODO interpret rate select based on page 00h byte 141 bits 0-1
+// RateSelect used for software rate select
 type RateSelect struct {
 	MSB bool
 	LSB bool
@@ -79,6 +81,7 @@ var controlMemoryMap = map[uint]map[uint]func(*Control, bool){
 	},
 }
 
+// NewControl parses [14]byte into a new Control instance
 func NewControl(raw [14]byte) *Control {
 	c := &Control{}
 

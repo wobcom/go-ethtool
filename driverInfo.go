@@ -6,24 +6,26 @@ import (
 )
 
 const (
-	ETHTOOL_GDRVINFO = 0x00000003 /* Get driver info */
+    // GetDriverInfoIoctl ioctl command number for "Get driver info"
+	GetDriverInfoIoctl = 0x00000003
 )
 
 type ethtoolDrvInfo struct {
 	cmd          uint32
 	driver       [32]byte
 	version      [32]byte
-	fw_version   [32]byte
-	bus_info     [32]byte
-	erom_version [32]byte
+	fwVersion    [32]byte
+	busInfo      [32]byte
+	eromVersion  [32]byte
 	reserved2    [12]byte
-	n_priv_flags uint32
-	n_stats      uint32
-	testinfo_len uint32
-	eedump_len   uint32
-	regdump_len  uint32
+	nPrivFlags   uint32
+	nStats       uint32
+	testinfoLen  uint32
+	eedumpLen    uint32
+	regdumpLen   uint32
 }
 
+// DriverInfo network interface driver information
 type DriverInfo struct {
 	// Driver short name. This should normally match the name
 	// in its bus driver structure (e.g. pci_driver::name).  Must
@@ -43,26 +45,26 @@ type DriverInfo struct {
 	RegDumpLength uint32
 }
 
-func NewDriverInfo(ethtoolDrvInfo *ethtoolDrvInfo) *DriverInfo {
+func newDriverInfo(ethtoolDrvInfo *ethtoolDrvInfo) *DriverInfo {
 	return &DriverInfo{
 		DriverName:          string(bytes.Trim(ethtoolDrvInfo.driver[:], "\x00")),
 		DriverVersion:       string(bytes.Trim(ethtoolDrvInfo.version[:], "\x00")),
-		FirmwareVersion:     string(bytes.Trim(ethtoolDrvInfo.fw_version[:], "\x00")),
-		BusInfo:             string(bytes.Trim(ethtoolDrvInfo.bus_info[:], "\x00")),
-		ExpansionRomVersion: string(bytes.Trim(ethtoolDrvInfo.erom_version[:], "\x00")),
-		EEPROMLength:        ethtoolDrvInfo.eedump_len,
-		RegDumpLength:       ethtoolDrvInfo.regdump_len,
+		FirmwareVersion:     string(bytes.Trim(ethtoolDrvInfo.fwVersion[:], "\x00")),
+		BusInfo:             string(bytes.Trim(ethtoolDrvInfo.busInfo[:], "\x00")),
+		ExpansionRomVersion: string(bytes.Trim(ethtoolDrvInfo.eromVersion[:], "\x00")),
+		EEPROMLength:        ethtoolDrvInfo.eedumpLen,
+		RegDumpLength:       ethtoolDrvInfo.regdumpLen,
 	}
 }
 
 func (i *Interface) getDriverInfo() (*DriverInfo, error) {
 	ethtoolDriverInfo := ethtoolDrvInfo{
-		cmd: ETHTOOL_GDRVINFO,
+		cmd: GetDriverInfoIoctl,
 	}
 
 	if err := i.performIoctl(uintptr(unsafe.Pointer(&ethtoolDriverInfo))); err != nil {
 		return nil, err
 	}
 
-	return NewDriverInfo(&ethtoolDriverInfo), nil
+	return newDriverInfo(&ethtoolDriverInfo), nil
 }

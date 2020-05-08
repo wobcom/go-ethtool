@@ -7,14 +7,16 @@ import (
 )
 
 const (
-	SIOCETHTOOL = 0x8946
+	siocethtool = 0x8946
 )
 
+// Ethtool provides a wrapper around the Kernel's ethtool ioctls
 type Ethtool struct {
 	fd int
 	mu *sync.Mutex
 }
 
+// NewEthtool initializes internal data structure (i.e. opens a socket) and returns a new Ethtool instance
 func NewEthtool() (*Ethtool, error) {
 	fd, err := unix.Socket(unix.AF_INET, unix.SOCK_DGRAM, unix.IPPROTO_IP)
 
@@ -28,10 +30,11 @@ func NewEthtool() (*Ethtool, error) {
 	}, nil
 }
 
+// PerformIoctl performs an ethtool ioctl and passes the given pointer to the ioctl
 func (e *Ethtool) PerformIoctl(ifr uintptr) error {
 	// TODO figure out if locking is necessary
 	//    e.mu.Lock()
-	_, _, ep := unix.Syscall(unix.SYS_IOCTL, uintptr(e.fd), SIOCETHTOOL, ifr)
+	_, _, ep := unix.Syscall(unix.SYS_IOCTL, uintptr(e.fd), siocethtool, ifr)
 	//    e.mu.Unlock()
 
 	if ep != 0 {
@@ -41,6 +44,7 @@ func (e *Ethtool) PerformIoctl(ifr uintptr) error {
 	return nil
 }
 
+// Close closes the internally used socket
 func (e *Ethtool) Close() {
 	unix.Close(e.fd)
 }

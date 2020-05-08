@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// ExternalCalibrationConstants Diagnostic calibration constants for optional External Calibration as of SFF-8472 rev 12.3 table 9-6
 type ExternalCalibrationConstants struct {
 	RxPwr             [5]float64
 	BiasSlope         float64
@@ -38,6 +39,7 @@ var externalCalibrationConstantsMemoryMap = map[uint]func(*ExternalCalibrationCo
 	},
 }
 
+// NewExternalCalibrationConstants parses [36]byte into a new ExternalCalibrationConstants instance
 func NewExternalCalibrationConstants(raw [36]byte) *ExternalCalibrationConstants {
 	e := &ExternalCalibrationConstants{}
 	for i := 0; i < 5; i++ {

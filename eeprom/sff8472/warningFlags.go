@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// WarningFlags Diagnostic Warning Flag Status Bits  as of SFF-8472 rev 12.3 table 9-12
 type WarningFlags struct {
 	Temperature      WarningFlagStatus
 	Voltage          WarningFlagStatus
@@ -10,6 +11,7 @@ type WarningFlags struct {
 	TecCurrent       WarningFlagStatus
 }
 
+// WarningFlagStatus provides high / low warning flag. A true represent that an alarm condition is present
 type WarningFlagStatus struct {
 	HighWarning bool
 	LowWarning  bool
@@ -36,6 +38,7 @@ var warningFlagsMemoryMap = map[uint]map[uint]func(*WarningFlags, bool){
 	},
 }
 
+// NewWarningFlags parses [2]byte into a new WarningFlags instance
 func NewWarningFlags(raw [2]byte) *WarningFlags {
 	a := &WarningFlags{}
 	for byteOffset, bitMap := range warningFlagsMemoryMap {

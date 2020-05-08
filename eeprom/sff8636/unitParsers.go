@@ -1,4 +1,4 @@
-package SFF8636
+package sff8636
 
 import (
 	"bytes"
@@ -6,8 +6,10 @@ import (
 	"math"
 )
 
+// Power type for power measurements, provides conversion to dBm when JSON serialized
 type Power float64
 
+// MarshalJSON implements the encoding/json/Marshaler interface's MarshalJSON function
 func (p Power) MarshalJSON() ([]byte, error) {
 	dbm := 10 * math.Log10(float64(p))
 

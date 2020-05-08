@@ -1,7 +1,8 @@
-package SFF8079
+package sff8079
 
 import "gitlab.com/wobcom/ethtool/eeprom"
 
+// Options Transceiver options
 type Options struct {
 	PowerLevel3Requirement          bool
 	PagingImplemented               bool
@@ -42,16 +43,18 @@ var optionsMemoryMap = map[uint]map[uint]func(*Options, bool){
 	},
 }
 
+// GetPowerClass returns the PowerClass from the given Options
 func (o *Options) GetPowerClass() eeprom.PowerClass {
 	if o.PowerLevel3Requirement {
-		return eeprom.PWR_CLASS_3
+		return eeprom.PowerClass3
 	}
 	if o.PowerLevel2Requirement {
-		return eeprom.PWR_CLASS_2
+		return eeprom.PowerClass2
 	}
-	return eeprom.PWR_CLASS_1
+	return eeprom.PowerClass1
 }
 
+// NewOptions decodes a [2]byte into a new Options instance
 func NewOptions(raw [2]byte) *Options {
 	o := &Options{}
 	for byteOffset, bitMap := range optionsMemoryMap {

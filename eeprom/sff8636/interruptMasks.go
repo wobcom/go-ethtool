@@ -1,16 +1,19 @@
-package SFF8636
+package sff8636
 
+// InterruptMasks as defined in SFF-8636 rev 2.10a table 6-12
 type InterruptMasks struct {
 	ChannelInterruptMasks  [4]ChannelInterruptMasks `json:"channelInterruptMasks"`
 	FreeSideInterruptMasks FreeSideInterruptMasks   `json:"freeSideInterruptMasks"`
 }
 
+// FreeSideInterruptMasks general free side interrupt masks
 type FreeSideInterruptMasks struct {
 	TemperatureAlarmMask AlarmMask
 	TCReadinessFlagMask  bool
 	VoltageAlarmMask     AlarmMask
 }
 
+// ChannelInterruptMasks channel specific interrupt masks
 type ChannelInterruptMasks struct {
 	TxLOSMask           bool `json:"txLOSMask"`
 	RxLOSMask           bool `json:"rxLOSMask"`
@@ -20,6 +23,7 @@ type ChannelInterruptMasks struct {
 	RxLOLMask           bool `json:"rxLOLMask"`
 }
 
+// AlarmMask alarm interrupt masks
 type AlarmMask struct {
 	HighAlarmMask   bool `json:"highAlarmMask"`
 	HighWarningMask bool `json:"highWarningMask"`
@@ -81,6 +85,7 @@ var interruptMasksMemoryMap = map[uint]map[uint]func(*InterruptMasks, bool){
 	// 0x05-0x06 vendor specific
 }
 
+// NewInterruptMasks parses [6]byte into a new InterruptMasks instance
 func NewInterruptMasks(raw [6]byte) *InterruptMasks {
 	i := &InterruptMasks{}
 

@@ -8,9 +8,11 @@ import (
 )
 
 const (
+    // IFNAMSIZ is the maximum length of an interface name
 	IFNAMSIZ = 16
 )
 
+// Interface representation of a network interface
 type Interface struct {
 	Name      string
 	nameBytes [IFNAMSIZ]byte
@@ -21,6 +23,7 @@ type Interface struct {
 	ethtool *Ethtool
 }
 
+// NewInterface retrieves information about a network interface and returns an Interface instance
 func (e *Ethtool) NewInterface(ifname string, ignoreEepromReadErrors bool) (*Interface, error) {
 	if len([]byte(ifname)) >= IFNAMSIZ {
 		return nil, errors.New(fmt.Sprintf("Interface name must not be longer than %d characters.", IFNAMSIZ))
@@ -48,8 +51,8 @@ func (e *Ethtool) NewInterface(ifname string, ignoreEepromReadErrors bool) (*Int
 }
 
 type ifreq struct {
-	ifr_name [IFNAMSIZ]byte
-	ifr_data uintptr
+	ifrName [IFNAMSIZ]byte
+	ifrData uintptr
 }
 
 func (i *Interface) performIoctl(data uintptr) error {
@@ -57,8 +60,8 @@ func (i *Interface) performIoctl(data uintptr) error {
 
 	copy(name[:], []byte(i.Name))
 	ifr := ifreq{
-		ifr_name: name,
-		ifr_data: data,
+		ifrName: name,
+		ifrData: data,
 	}
 
 	return i.ethtool.PerformIoctl(uintptr(unsafe.Pointer(&ifr)))
@@ -67,15 +70,4 @@ func (i *Interface) performIoctl(data uintptr) error {
 type ethtoolArbitraryCommand struct {
 	cmd   uint32
 	value uint32
-}
-
-const ETHTOOL_PHYS_ID = 0x0000001c /* identify the NIC */
-
-// Makes the interface LED blink
-func (i *Interface) Identify(time uint32) error {
-	cmd := ethtoolArbitraryCommand{
-		cmd:   ETHTOOL_PHYS_ID,
-		value: time,
-	}
-	return i.performIoctl(uintptr(unsafe.Pointer(&cmd)))
 }

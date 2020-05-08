@@ -1,5 +1,6 @@
-package SFF8636
+package sff8636
 
+// Options options implemented in the free side device
 type Options struct {
 	LPModeTxDisConfigurable                bool
 	IntLRxLOSLConfigurable                 bool
@@ -60,6 +61,7 @@ var optionsMemoryMap = map[uint]map[uint]func(*Options, bool){
 	},
 }
 
+// NewOptions parses [3]byte into a new Options instance
 func NewOptions(raw [3]byte) *Options {
 	o := &Options{}
 	for byteOffset, bitMap := range optionsMemoryMap {

@@ -1,5 +1,6 @@
-package SFF8636
+package sff8636
 
+// DiagnosticMonitoringType indicators describing how diagnostic monitoring is implemented
 type DiagnosticMonitoringType struct {
 	TemperatureMonitoringImplemented     bool
 	SupplyVoltageMonitoringImplemented   bool
@@ -7,6 +8,7 @@ type DiagnosticMonitoringType struct {
 	TransmitterPowerMeasurementSupported bool
 }
 
+// ReceivedPowerMeasurementsType indicates how power measurements are implemented
 type ReceivedPowerMeasurementsType bool
 
 func (r ReceivedPowerMeasurementsType) String() string {
@@ -16,6 +18,7 @@ func (r ReceivedPowerMeasurementsType) String() string {
 	return "Average Power"
 }
 
+// NewDiagnosticMonitoringType parses a bye into a new DiagnosticMonitoringType instance
 func NewDiagnosticMonitoringType(raw byte) *DiagnosticMonitoringType {
 	return &DiagnosticMonitoringType{
 		TemperatureMonitoringImplemented:     raw&(1<<5) > 0,

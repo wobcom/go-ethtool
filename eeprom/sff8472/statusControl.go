@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// StatusControl  Optional Status and Control Bits as of SFF-8472 rev 12.3 table 9-11
 type StatusControl struct {
 	TxDisableState         bool
 	SoftTxDisableSelect    bool
@@ -11,6 +12,7 @@ type StatusControl struct {
 	DataReadyBarState      bool
 }
 
+// NewStatusControl parses a byte into a new StatusControl instance
 func NewStatusControl(raw byte) *StatusControl {
 	return &StatusControl{
 		TxDisableState:         raw&(1<<7) > 0,

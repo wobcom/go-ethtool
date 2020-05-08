@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// AlarmFlags as defined in SFF-8472
 type AlarmFlags struct {
 	Temperature      AlarmFlagStatus
 	Voltage          AlarmFlagStatus
@@ -10,6 +11,7 @@ type AlarmFlags struct {
 	TecCurrent       AlarmFlagStatus
 }
 
+// AlarmFlagStatus type of entry in AlarmFlags
 type AlarmFlagStatus struct {
 	HighAlarm bool
 	LowAlarm  bool
@@ -36,6 +38,7 @@ var alarmFlagsMemoryMap = map[uint]map[uint]func(*AlarmFlags, bool){
 	},
 }
 
+// NewAlarmFlags parses a [2]nute and returns a new AlarmFlags instance
 func NewAlarmFlags(raw [2]byte) *AlarmFlags {
 	a := &AlarmFlags{}
 	for byteOffset, bitMap := range alarmFlagsMemoryMap {

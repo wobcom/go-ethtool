@@ -5,7 +5,8 @@ import (
 )
 
 const (
-	ETHTOOL_RESET = 0x00000034 /* Reset hardware */
+    // Reset hardware
+	resetIoctl = 0x00000034
 )
 
 type ethtoolReset struct {
@@ -13,10 +14,10 @@ type ethtoolReset struct {
 	flags uint32
 }
 
-// Interestingly this ioctl seems to be not implemented by any driver :/
+// PerformReset performs an interface reset
 func (i *Interface) PerformReset() error {
 	reset := ethtoolReset{
-		cmd:   ETHTOOL_RESET,
+		cmd:   resetIoctl,
 		flags: 0xFFFFFFFF,
 	}
 

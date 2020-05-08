@@ -1,9 +1,10 @@
-package SFF8636
+package sff8636
 
 import (
 	"gitlab.com/wobcom/ethtool/eeprom"
 )
 
+// ExtendedIdentifier provides additional information about the free side device.device contains a CDR function and identifies the power cons
 type ExtendedIdentifier struct {
 	PowerClass             eeprom.PowerClass
 	PowerClass8Implemented bool
@@ -15,24 +16,25 @@ type ExtendedIdentifier struct {
 func parsePowerClass(raw byte) eeprom.PowerClass {
 	switch raw {
 	case 0b00000000:
-		return eeprom.PWR_CLASS_1
+		return eeprom.PowerClass1
 	case 0b01000000:
-		return eeprom.PWR_CLASS_2
+		return eeprom.PowerClass2
 	case 0b10000000:
-		return eeprom.PWR_CLASS_3
+		return eeprom.PowerClass3
 	case 0b11000000:
-		return eeprom.PWR_CLASS_4
+		return eeprom.PowerClass4
 	case 0b11000001:
-		return eeprom.PWR_CLASS_5
+		return eeprom.PowerClass5
 	case 0b11000010:
-		return eeprom.PWR_CLASS_6
+		return eeprom.PowerClass6
 	case 0b11000011:
-		return eeprom.PWR_CLASS_7
+		return eeprom.PowerClass7
 	default:
-		return eeprom.PWR_CLASS_1
+		return eeprom.PowerClass1
 	}
 }
 
+// NewExtendedIdentifier parses a byte into a new ExtendedIdentifier instance
 func NewExtendedIdentifier(raw byte) *ExtendedIdentifier {
 	return &ExtendedIdentifier{
 		PowerClass:             parsePowerClass(raw & 0b11000011),

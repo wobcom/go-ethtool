@@ -8,46 +8,50 @@ import (
 )
 
 const (
-	ETHTOOL_GFEATURES = 0x0000003a /* Get device offload settings */
+    // Get device offload settings
+	getFeatures = 0x0000003a
 )
 
 const (
-	MAX_FEATURE_BLOCKS = (MAX_GSTRINGS + 32 - 1) / 32
+	maxFeatureBlocks = (maxNumStrings + 32 - 1) / 32
 )
 
 type ethtoolGetFeaturesBlock struct {
 	available     uint32
 	requested     uint32
 	active        uint32
-	never_changed uint32
+	neverChanged uint32
 }
 
 type ethtoolGfeatures struct {
 	cmd    uint32
 	size   uint32
-	blocks [MAX_FEATURE_BLOCKS]ethtoolGetFeaturesBlock
+	blocks [maxFeatureBlocks]ethtoolGetFeaturesBlock
 }
 
+// FeatureList maps the name of a network interfaces feature to a FeatureStatus
 type FeatureList map[string]FeatureStatus
 
+// FeatureStatus describes the status of network interface feature
 type FeatureStatus struct {
-	Available    bool `json:"available"`
-	Active       bool `json:"active"`
-	NeverChanged bool `json:"neverChanged"`
+	Available    bool
+	Active       bool
+	NeverChanged bool
 }
 
+// GetFeatures returns a FeatureList of features supported by the NIC
 func (i *Interface) GetFeatures() (FeatureList, error) {
-	names, err := i.GetStringSet(ETH_SS_FEATURES)
+	names, err := i.GetStringSet(StringSetFeatures)
 	if err != nil {
 		return FeatureList{}, errors.Wrapf(err, "Could not retrieve list of feature names: %v", err)
 	}
 
 	features := ethtoolGfeatures{
-		cmd:  ETHTOOL_GFEATURES,
+		cmd:  getFeatures,
 		size: uint32((len(names) + 31) / 32),
 	}
 	if err := i.performIoctl(uintptr(unsafe.Pointer(&features))); err != nil {
-		return FeatureList{}, errors.Wrapf(err, "Error running ioctl ETHTOOL_GFEATURES")
+		return FeatureList{}, errors.Wrapf(err, "Error running ioctl getFeatures")
 	}
 
 	ret := make(FeatureList)
@@ -71,12 +75,12 @@ func (f FeatureList) String() string {
 }
 
 func getFeatureBit(features ethtoolGfeatures, index int) (FeatureStatus, error) {
-	if index/32 > int(features.size) || index/32 > MAX_FEATURE_BLOCKS {
+	if index/32 > int(features.size) || index/32 > maxFeatureBlocks {
 		return FeatureStatus{false, false, false}, errors.New(fmt.Sprintf("Index %d out of bound for retrieved feature list (size = %d * 32)", index, features.size))
 	}
 	return FeatureStatus{
 		Available:    features.blocks[index/32].available&(1<<(index%32)) > 0,
 		Active:       features.blocks[index/32].active&(1<<(index%32)) > 0,
-		NeverChanged: features.blocks[index/32].never_changed&(1<<(index%32)) > 0,
+		NeverChanged: features.blocks[index/32].neverChanged&(1<<(index%32)) > 0,
 	}, nil
 }

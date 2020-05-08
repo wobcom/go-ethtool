@@ -1,5 +1,6 @@
-package SFF8636
+package sff8636
 
+// Thresholds as defined in SFF-8636 rev 2.10a table 6-27
 type Thresholds struct {
 	Temperature AlarmThresholds
 	Voltage     AlarmThresholds
@@ -8,6 +9,7 @@ type Thresholds struct {
 	TxPower     AlarmPowerThresholds
 }
 
+// AlarmThresholds defines high/low alarm/warning thresholds
 type AlarmThresholds struct {
 	HighAlarm   float64
 	HighWarning float64
@@ -15,6 +17,7 @@ type AlarmThresholds struct {
 	LowWarning  float64
 }
 
+// AlarmPowerThresholds defines high/low alarm/warning thresholds for the Power type
 type AlarmPowerThresholds struct {
 	HighAlarm   Power
 	HighWarning Power
@@ -48,6 +51,7 @@ var thresholdMemoryMap = map[uint]func(*Thresholds, byte, byte){
 	0x46: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.LowWarning = parsePower(msb, lsb) },
 }
 
+// NewThresholds parses [72]byte into a new Threshods instance
 func NewThresholds(raw [72]byte) *Thresholds {
 	t := &Thresholds{}
 

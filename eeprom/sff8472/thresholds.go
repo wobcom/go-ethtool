@@ -1,5 +1,6 @@
-package SFF8472
+package sff8472
 
+// Thresholds Diagnostic Flag Alarm and Warning Thresholds as of SFF-84722 rev. 12.3 table 9-5
 type Thresholds struct {
 	Temperature *AlarmThresholds
 	Voltage     *AlarmThresholds
@@ -8,6 +9,7 @@ type Thresholds struct {
 	RxPower     *AlarmThresholdsPower
 }
 
+// AlarmThresholds provides high / low alarm / warning thresholds
 type AlarmThresholds struct {
 	HighAlarm   float64
 	HighWarning float64
@@ -15,6 +17,7 @@ type AlarmThresholds struct {
 	LowWarning  float64
 }
 
+// AlarmThresholdsPower provides high / low alarm / warning thresholds for the Power type
 type AlarmThresholdsPower struct {
 	HighAlarm   Power
 	HighWarning Power
@@ -49,6 +52,7 @@ var thresholdsMemoryMap = map[uint]func(*Thresholds, byte, byte){
 	0x26: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.LowWarning = parsePower(msb, lsb) },
 }
 
+// NewThresholds parses [40]byte into a new Thresholds instance
 func NewThresholds(raw [40]byte) *Thresholds {
 	t := &Thresholds{
 		Temperature: &AlarmThresholds{},
