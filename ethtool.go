@@ -32,10 +32,9 @@ func NewEthtool() (*Ethtool, error) {
 
 // PerformIoctl performs an ethtool ioctl and passes the given pointer to the ioctl
 func (e *Ethtool) PerformIoctl(ifr uintptr) error {
-	// TODO figure out if locking is necessary
-	//    e.mu.Lock()
+	e.mu.Lock()
 	_, _, ep := unix.Syscall(unix.SYS_IOCTL, uintptr(e.fd), siocethtool, ifr)
-	//    e.mu.Unlock()
+	e.mu.Unlock()
 
 	if ep != 0 {
 		return ep
