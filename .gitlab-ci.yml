@@ -9,7 +9,7 @@ default:
     - cp -r $CI_PROJECT_DIR /go/src/gitlab.com/wobcom/ethtool
     - ln -s /go/src/gitlab.com/wobcom/ethtool /go/src/_/builds/ethtool
     - go get -v -d ./...
-    - go build -i -v gitlab.com/wobcom/ethtool/example
+    - go build -i -v gitlab.com/wobcom/ethtool
 
 fmt:
   stage: verify
