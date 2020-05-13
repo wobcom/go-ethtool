@@ -41,15 +41,15 @@ var thresholdsMemoryMap = map[uint]func(*Thresholds, byte, byte){
 	0x14: func(t *Thresholds, msb byte, lsb byte) { t.Bias.HighWarning = parseCurrent(msb, lsb) },
 	0x16: func(t *Thresholds, msb byte, lsb byte) { t.Bias.LowWarning = parseCurrent(msb, lsb) },
 
-	0x18: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.HighAlarm = parsePower(msb, lsb) },
-	0x1A: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.LowAlarm = parsePower(msb, lsb) },
-	0x1C: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.HighWarning = parsePower(msb, lsb) },
-	0x1E: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.LowWarning = parsePower(msb, lsb) },
+	0x18: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.HighAlarm = parsePower(msb, lsb) },
+	0x1A: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.LowAlarm = parsePower(msb, lsb) },
+	0x1C: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.HighWarning = parsePower(msb, lsb) },
+	0x1E: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.LowWarning = parsePower(msb, lsb) },
 
-	0x20: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.HighAlarm = parsePower(msb, lsb) },
-	0x22: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.LowAlarm = parsePower(msb, lsb) },
-	0x24: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.HighWarning = parsePower(msb, lsb) },
-	0x26: func(t *Thresholds, msb byte, lsb byte) { t.TxPower.LowWarning = parsePower(msb, lsb) },
+	0x20: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.HighAlarm = parsePower(msb, lsb) },
+	0x22: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.LowAlarm = parsePower(msb, lsb) },
+	0x24: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.HighWarning = parsePower(msb, lsb) },
+	0x26: func(t *Thresholds, msb byte, lsb byte) { t.RxPower.LowWarning = parsePower(msb, lsb) },
 }
 
 // NewThresholds parses [40]byte into a new Thresholds instance
