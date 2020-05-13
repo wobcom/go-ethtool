@@ -2,6 +2,7 @@ package sff8472
 
 import (
     "testing"
+    "time"
     "encoding/hex"
     "encoding/json"
 )
@@ -21,12 +22,57 @@ func getEEPROM(t *testing.T) *EEPROM {
     return eeprom
 }
 
+func assertString(t *testing.T, got string, expected string, function string) {
+    if got != expected {
+        t.Errorf("%s returned '%s', but expected '%s'", function, got, expected)
+    }
+}
+
+func assertFloat64(t *testing.T, got float64, expected float64, function string) {
+    if got != expected {
+        t.Errorf("%s returned %f, but expected %f", function, got, expected)
+    }
+}
+func assertBool(t *testing.T, got bool, expected bool, function string) {
+    if got != expected {
+        t.Errorf("%s returned %t, but expected %t", function, got, expected)
+    }
+}
+
 func TestParseEEPROM(t *testing.T) {
     eeprom := getEEPROM(t)
 
-    if eeprom.VendorName != "FLEXOPTIX" {
-        t.Errorf("Expected FLEXOPTIX, got %s", eeprom.VendorName)
+    assertString(t, eeprom.GetIdentifier().String(), "SFP", "eeprom.GetIdentifier")
+    assertString(t, eeprom.GetConnectorType().String(), "LC", "eeprom.GetConnectorType")
+    assertString(t, eeprom.GetEncoding(), "64B/66B", "eeprom.GetEncoding")
+    assertString(t, eeprom.GetPowerClass().String(), "Power Level 1 (max 1.50 W)", "eeprom.GetPowerClass")
+    assertFloat64(t, eeprom.GetSignalingRate(), 10300000000.0, "eeprom.GetSignalingRate")
+    assertString(t, eeprom.GetVendorName(), "FLEXOPTIX", "eeprom.GetVendorName")
+    assertString(t, eeprom.GetVendorPN(), "P.B1696.10.DA", "eeprom.GetVendorPN")
+    assertString(t, eeprom.GetVendorRev(), "A", "eeprom.GetVendorRev")
+    assertString(t, eeprom.GetVendorSN(), "F79B5KH", "eeprom.GetVendorSN")
+    assertString(t, eeprom.GetVendorOUI().String(), "20:00:00", "eeprom.GetVendorOUI")
+    expectedDate, _ := time.Parse("060102", "191218")
+    if dateCode := eeprom.GetDateCode(); dateCode != expectedDate {
+        t.Errorf("eeprom.GetDateCode() returned %s, but expected %s", dateCode.Format("060102"), expectedDate.Format("060102"))
     }
+    assertFloat64(t, eeprom.GetWavelength(), 1330, "eeprom.GetWavelength")
+    lasers := eeprom.GetLasers()
+    if len(lasers) != 1 {
+        t.Errorf("Expected exactly one laser")
+    }
+    laser := lasers[0]
+    assertBool(t, laser.SupportsMonitoring(), true, "laser.SupportsMonitoring")
+    txPower, err := laser.GetTxPower()
+    if err != nil {
+        t.Errorf(err.Error())
+    }
+    assertBool(t, txPower.SupportsThresholds(), true, "txPower.SupportsThresholds")
+    txPowerThresholds, err := txPower.GetAlarmThresholds()
+    if err != nil {
+        t.Errorf(err.Error())
+    }
+    assertFloat64(t, txPowerThresholds.GetHighAlarm(), 1.7783, "txPowerThresholds.GetHighAlarm")
 }
 
 func TestCalibration(t *testing.T) {
