@@ -17,9 +17,9 @@ type ExtendedStatusControl struct {
 type PowerLevelOperationState bool
 
 const (
-    // PowerLevelOperationStatePowerLevel1 Power Level 1 operation (1.0 Watt max)
-	PowerLevelOperationStatePowerLevel1   PowerLevelOperationState = false
-    // PowerLevelOperationStatePowerLevel2_3 Power Level 2 or 3 operation (1.5 or 2.0 Watt max)
+	// PowerLevelOperationStatePowerLevel1 Power Level 1 operation (1.0 Watt max)
+	PowerLevelOperationStatePowerLevel1 PowerLevelOperationState = false
+	// PowerLevelOperationStatePowerLevel2_3 Power Level 2 or 3 operation (1.5 or 2.0 Watt max)
 	PowerLevelOperationStatePowerLevel2_3 PowerLevelOperationState = true
 )
 

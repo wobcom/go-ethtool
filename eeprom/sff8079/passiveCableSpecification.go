@@ -8,19 +8,20 @@ import (
 
 // PassiveCableSpecifications maps a PassiveCableSpecification to a bool indicating its compliance (true) or not (false)
 type PassiveCableSpecifications map[PassiveCableSpecification]bool
+
 // PassiveCableSpecification a passive cable specification
 type PassiveCableSpecification int
 
 const (
-    // PassiveCableSpecificationFCPI4AppendixH Compliant to FC-PI-4 Appendix H
+	// PassiveCableSpecificationFCPI4AppendixH Compliant to FC-PI-4 Appendix H
 	PassiveCableSpecificationFCPI4AppendixH PassiveCableSpecification = iota
-    // PassiveCableSpecificationSFF8431AppendixE Compliant to SFF-8431 Appendix E
+	// PassiveCableSpecificationSFF8431AppendixE Compliant to SFF-8431 Appendix E
 	PassiveCableSpecificationSFF8431AppendixE
 )
 
 func (p PassiveCableSpecification) String() string {
 	return map[PassiveCableSpecification]string{
-		PassiveCableSpecificationFCPI4AppendixH: "Compliant to FC-PI-4 Appendix H",
+		PassiveCableSpecificationFCPI4AppendixH:   "Compliant to FC-PI-4 Appendix H",
 		PassiveCableSpecificationSFF8431AppendixE: "Compliant to SFF-8431 Appendix E",
 	}[p]
 }

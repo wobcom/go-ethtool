@@ -12,9 +12,9 @@ const (
 )
 
 const (
-	testFlagOffline          = (1 << 0) /* if set perform online and offline tests, otherwise only online tests */
-	testFlagFailed           = (1 << 1) /* Driver set this flag if test fails */
-	testFlagExternalLoopback      = (1 << 2) /* Application request to perform external loopback test */
+	testFlagOffline              = (1 << 0) /* if set perform online and offline tests, otherwise only online tests */
+	testFlagFailed               = (1 << 1) /* Driver set this flag if test fails */
+	testFlagExternalLoopback     = (1 << 2) /* Application request to perform external loopback test */
 	testFlagExternalLoopbackDone = (1 << 3) /* Driver performed the external loopback test */
 )
 

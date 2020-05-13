@@ -12,6 +12,7 @@ type StatusIndicators struct {
 
 // RevisionCompliance compliance regarding the SFF-8636 standard, see SFF-8636 rev 2.10 table 6-3
 type RevisionCompliance byte
+
 // StatusIndicator as defined in SFF-8636 rev 2.10 table 6-2
 type StatusIndicator struct {
 	/* Upper memory flat or paged.
@@ -29,43 +30,43 @@ type StatusIndicator struct {
 }
 
 const (
-    // RevisionUnspecified Revision not specified, might be anything < SFF-8636 Rev 2.5
-	RevisionUnspecified              RevisionCompliance = 0x00
-    // Revision4dot8orEarlier SFF-8436 Rev 4.8 or earlier
-	Revision4dot8orEarlier      RevisionCompliance = 0x01
-    // RevisionSFF8436andSFF8636 Includes functionality described in revision 4.8 or earlier of SFF-8436, except that this byte and Bytes 186-189 are as defined in this document
-	RevisionSFF8436andSFF8636                    = 0x02
-    // Revision1dot3orEarlier SFF-8636 Rev 1.3 or earlier
-	Revision1dot3orEarlier      RevisionCompliance = 0x03
-    // Revision1dot4 SFF-8636 Rev 1.4
-	Revision1dot4              RevisionCompliance = 0x04
-    // Revision1dot5 SFF-8636 Rev 1.5
-	Revision1dot5              RevisionCompliance = 0x05
-    // Revision2dot0 SFF-8636 Rev 2.0
-	Revision2dot0              RevisionCompliance = 0x06
-    // Revision2dot5and2dot6and2dot7 SFF-8636 Rev 2.5, 2.6 and 2.7
-	Revision2dot5and2dot6and2dot7    RevisionCompliance = 0x07
-    // Revision2dot8and2dot9and2dot10 SFF-8636 Rev 2.8, 2.9 and 2.10
-	Revision2dot8and2dot9and2dot10   RevisionCompliance = 0x08
+	// RevisionUnspecified Revision not specified, might be anything < SFF-8636 Rev 2.5
+	RevisionUnspecified RevisionCompliance = 0x00
+	// Revision4dot8orEarlier SFF-8436 Rev 4.8 or earlier
+	Revision4dot8orEarlier RevisionCompliance = 0x01
+	// RevisionSFF8436andSFF8636 Includes functionality described in revision 4.8 or earlier of SFF-8436, except that this byte and Bytes 186-189 are as defined in this document
+	RevisionSFF8436andSFF8636 = 0x02
+	// Revision1dot3orEarlier SFF-8636 Rev 1.3 or earlier
+	Revision1dot3orEarlier RevisionCompliance = 0x03
+	// Revision1dot4 SFF-8636 Rev 1.4
+	Revision1dot4 RevisionCompliance = 0x04
+	// Revision1dot5 SFF-8636 Rev 1.5
+	Revision1dot5 RevisionCompliance = 0x05
+	// Revision2dot0 SFF-8636 Rev 2.0
+	Revision2dot0 RevisionCompliance = 0x06
+	// Revision2dot5and2dot6and2dot7 SFF-8636 Rev 2.5, 2.6 and 2.7
+	Revision2dot5and2dot6and2dot7 RevisionCompliance = 0x07
+	// Revision2dot8and2dot9and2dot10 SFF-8636 Rev 2.8, 2.9 and 2.10
+	Revision2dot8and2dot9and2dot10 RevisionCompliance = 0x08
 )
 
 const (
-	flatMemBitoffset       = 0x02
-	intlBitOffset           = 0x01
+	flatMemBitoffset      = 0x02
+	intlBitOffset         = 0x01
 	dataNotReadyBitoffset = 0x00
 )
 
 func (r RevisionCompliance) String() string {
 	return map[RevisionCompliance]string{
-		RevisionUnspecified:              "Revision not specified, might be anything < SFF-8636 Rev 2.5",
-		Revision4dot8orEarlier:      "SFF-8436 Rev 4.8 or earlier",
-		RevisionSFF8436andSFF8636: "Includes functionality described in revision 4.8 or earlier of SFF-8436, except that this byte and Bytes 186-189 are as defined in this document",
-		Revision1dot3orEarlier:      "SFF-8636 Rev 1.3 or earlier",
-		Revision1dot4:              "SFF-8636 Rev 1.4",
-		Revision1dot5:              "SFF-8636 Rev 1.5",
-		Revision2dot0:              "SFF-8636 Rev 2.0",
-		Revision2dot5and2dot6and2dot7:    "SFF-8636 Rev 2.5, 2.6 and 2.7",
-		Revision2dot8and2dot9and2dot10:   "SFF-8636 Rev 2.8, 2.9 and 2.10",
+		RevisionUnspecified:            "Revision not specified, might be anything < SFF-8636 Rev 2.5",
+		Revision4dot8orEarlier:         "SFF-8436 Rev 4.8 or earlier",
+		RevisionSFF8436andSFF8636:      "Includes functionality described in revision 4.8 or earlier of SFF-8436, except that this byte and Bytes 186-189 are as defined in this document",
+		Revision1dot3orEarlier:         "SFF-8636 Rev 1.3 or earlier",
+		Revision1dot4:                  "SFF-8636 Rev 1.4",
+		Revision1dot5:                  "SFF-8636 Rev 1.5",
+		Revision2dot0:                  "SFF-8636 Rev 2.0",
+		Revision2dot5and2dot6and2dot7:  "SFF-8636 Rev 2.5, 2.6 and 2.7",
+		Revision2dot8and2dot9and2dot10: "SFF-8636 Rev 2.8, 2.9 and 2.10",
 	}[r]
 }
 

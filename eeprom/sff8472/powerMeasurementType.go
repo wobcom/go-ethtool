@@ -4,9 +4,9 @@ package sff8472
 type PowerMeasurementType bool
 
 const (
-    // OmaPowerMeasurementType OMA
-	OmaPowerMeasurementType     PowerMeasurementType = false
-    // AveragePowerMeasurementType average power
+	// OmaPowerMeasurementType OMA
+	OmaPowerMeasurementType PowerMeasurementType = false
+	// AveragePowerMeasurementType average power
 	AveragePowerMeasurementType PowerMeasurementType = true
 )
 

@@ -2,26 +2,26 @@ package sff8636
 
 // InterruptFlags as defined in SFF-8636 rev 2.10a table 6-4
 type InterruptFlags struct {
-	ChannelInterrupt       [4]ChannelInterrupt    
-	FreeSideInterruptFlags FreeSideInterruptFlags 
+	ChannelInterrupt       [4]ChannelInterrupt
+	FreeSideInterruptFlags FreeSideInterruptFlags
 }
 
 // FreeSideInterruptFlags freeside general interrupts
 type FreeSideInterruptFlags struct {
-	TemperatureAlarm       Alarm 
-	TCReadinessFlag        bool  
-	InitializationComplete bool  
-	VoltageAlarm           Alarm 
+	TemperatureAlarm       Alarm
+	TCReadinessFlag        bool
+	InitializationComplete bool
+	VoltageAlarm           Alarm
 }
 
 // ChannelInterrupt channel specific interrupts
 type ChannelInterrupt struct {
-	TxLOS           bool  
-	RxLOS           bool 
+	TxLOS           bool
+	RxLOS           bool
 	AdaptiveEQFault bool
-	TxFault         bool 
-	TxLOL           bool 
-	RxLOL           bool 
+	TxFault         bool
+	TxLOL           bool
+	RxLOL           bool
 	RxPowerAlarm    Alarm
 	TxPowerAlarm    Alarm
 	BiasAlarm       Alarm

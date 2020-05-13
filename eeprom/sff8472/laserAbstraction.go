@@ -104,7 +104,7 @@ func (e *EEPROM) GetLasers() []eeprom.Laser {
 	}
 	return []eeprom.Laser{
 		&Laser{
-            MonitoringSupported: e.DiagnosticMonitoringType.DiagnosticMonitoringImplemented,
+			MonitoringSupported: e.DiagnosticMonitoringType.DiagnosticMonitoringImplemented,
 			RxPower: &Measurement{
 				Value: float64(e.Diagnostics.RxPower),
 				Unit:  "milliwatts",

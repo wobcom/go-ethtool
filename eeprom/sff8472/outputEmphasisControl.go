@@ -15,21 +15,21 @@ type OutputEmphasisControl struct {
 type OutputEmphasis byte
 
 const (
-    // OutputEmphasis7dB 7dB
-	OutputEmphasis7dB        OutputEmphasis = 7
-    // OutputEmphasis6dB 6dB
-	OutputEmphasis6dB        OutputEmphasis = 6
-    // OutputEmphasis5dB 5dB
-	OutputEmphasis5dB        OutputEmphasis = 5
-    // OutputEmphasis4dB 4dB
-	OutputEmphasis4dB        OutputEmphasis = 4
-    // OutputEmphasis3dB 3dB
-	OutputEmphasis3dB        OutputEmphasis = 3
-    // OutputEmphasis2dB 2dB
-	OutputEmphasis2dB        OutputEmphasis = 2
-    // OutputEmphasis1dB 1dB
-	OutputEmphasis1dB        OutputEmphasis = 1
-    // OutputEmphasisNoEmphasis No Emphasis 
+	// OutputEmphasis7dB 7dB
+	OutputEmphasis7dB OutputEmphasis = 7
+	// OutputEmphasis6dB 6dB
+	OutputEmphasis6dB OutputEmphasis = 6
+	// OutputEmphasis5dB 5dB
+	OutputEmphasis5dB OutputEmphasis = 5
+	// OutputEmphasis4dB 4dB
+	OutputEmphasis4dB OutputEmphasis = 4
+	// OutputEmphasis3dB 3dB
+	OutputEmphasis3dB OutputEmphasis = 3
+	// OutputEmphasis2dB 2dB
+	OutputEmphasis2dB OutputEmphasis = 2
+	// OutputEmphasis1dB 1dB
+	OutputEmphasis1dB OutputEmphasis = 1
+	// OutputEmphasisNoEmphasis No Emphasis
 	OutputEmphasisNoEmphasis OutputEmphasis = 0
 )
 

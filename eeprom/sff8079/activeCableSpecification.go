@@ -8,25 +8,26 @@ import (
 
 // ActiveCableSpecifications maps an ActiveCableSpecification to a bool indicating its compliance (true) or not (false)
 type ActiveCableSpecifications map[ActiveCableSpecification]bool
+
 // ActiveCableSpecification an active cable specification
 type ActiveCableSpecification int
 
 const (
-    // ActiveCableSpecificationFCPI4Limiting Compliant to FC-PI-4 Limiting
+	// ActiveCableSpecificationFCPI4Limiting Compliant to FC-PI-4 Limiting
 	ActiveCableSpecificationFCPI4Limiting ActiveCableSpecification = iota
-    // ActiveCableSpecificationSFF8431Limiting Compliant to SFF-8431 Limiting
+	// ActiveCableSpecificationSFF8431Limiting Compliant to SFF-8431 Limiting
 	ActiveCableSpecificationSFF8431Limiting
-    // ActiveCableSpecificationFCPI4AppendixH Compliant to FC-PI-4 Appendix H
+	// ActiveCableSpecificationFCPI4AppendixH Compliant to FC-PI-4 Appendix H
 	ActiveCableSpecificationFCPI4AppendixH
-    // ActiveCableSpecificationSFF8431AppendixE Compliant to SFF-8431 Appendix E
+	// ActiveCableSpecificationSFF8431AppendixE Compliant to SFF-8431 Appendix E
 	ActiveCableSpecificationSFF8431AppendixE
 )
 
 func (a ActiveCableSpecification) String() string {
 	return map[ActiveCableSpecification]string{
-		ActiveCableSpecificationFCPI4Limiting:  "Compliant to FC-PI-4 Limiting",
+		ActiveCableSpecificationFCPI4Limiting:    "Compliant to FC-PI-4 Limiting",
 		ActiveCableSpecificationSFF8431Limiting:  "Compliant to SFF-8431 Limiting",
-		ActiveCableSpecificationFCPI4AppendixH: "Compliant to FC-PI-4 Appendix H",
+		ActiveCableSpecificationFCPI4AppendixH:   "Compliant to FC-PI-4 Appendix H",
 		ActiveCableSpecificationSFF8431AppendixE: "Compliant to SFF-8431 Appendix E",
 	}[a]
 }

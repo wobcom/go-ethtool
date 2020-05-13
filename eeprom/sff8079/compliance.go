@@ -8,163 +8,155 @@ import (
 
 // Compliance maps a ComplianceFlag indicating the compliance to a certain standard (true) or not (false)
 type Compliance map[ComplianceFlag]bool
+
 // ComplianceFlag flag for a certian standard
 type ComplianceFlag int
 
 const (
 	/* 10G Ethernet ComplianceFlag Codes */
-    
-    // ComplianceFlag10GBaseER 10G Base-ER
+
+	// ComplianceFlag10GBaseER 10G Base-ER
 	ComplianceFlag10GBaseER ComplianceFlag = iota
-    // ComplianceFlag10GBaseLRM 10G Base-ER 10G Base-LRM
+	// ComplianceFlag10GBaseLRM 10G Base-ER 10G Base-LRM
 	ComplianceFlag10GBaseLRM
-    // ComplianceFlag10GBaseLR 10G BASE-LR
+	// ComplianceFlag10GBaseLR 10G BASE-LR
 	ComplianceFlag10GBaseLR
-    // ComplianceFlag10GBaseSR 10G BASE-SR
+	// ComplianceFlag10GBaseSR 10G BASE-SR
 	ComplianceFlag10GBaseSR
 
-
 	/* Infiband ComplianceFlag Codes */
-    
-    // ComplianceFlag1XSX 1X SX
+
+	// ComplianceFlag1XSX 1X SX
 	ComplianceFlag1XSX
-    // ComplianceFlag1XLX 1X LX
+	// ComplianceFlag1XLX 1X LX
 	ComplianceFlag1XLX
-    // ComplianceFlag1XCopperActive 1X Copper Active
+	// ComplianceFlag1XCopperActive 1X Copper Active
 	ComplianceFlag1XCopperActive
-    // ComplianceFlag1XCopperPassive 1X Copper Passive
+	// ComplianceFlag1XCopperPassive 1X Copper Passive
 	ComplianceFlag1XCopperPassive
 
-
 	/* ESCON ComplianceFlag Codes */
-    
-    // ComplianceFlagEsconMMF1310Led ESCON MMF, 1310nm LED
+
+	// ComplianceFlagEsconMMF1310Led ESCON MMF, 1310nm LED
 	ComplianceFlagEsconMMF1310Led
-    // ComplianceFlagEsconMMF1310Laser ESCON MMF, 1310nm Laser
+	// ComplianceFlagEsconMMF1310Laser ESCON MMF, 1310nm Laser
 	ComplianceFlagEsconMMF1310Laser
 
-
 	/* SONET ComplianceFlag Codes */
-    
-    // ComplianceFlagOC192ShortReach OC-192, short reach
+
+	// ComplianceFlagOC192ShortReach OC-192, short reach
 	ComplianceFlagOC192ShortReach
-    // ComplianceFlagSonetReachSpecifierBit1 SONET reach specifier bit 1
+	// ComplianceFlagSonetReachSpecifierBit1 SONET reach specifier bit 1
 	ComplianceFlagSonetReachSpecifierBit1
-    // ComplianceFlagSonetReachSpecifierBit2 SONET reach specifier bit 2
+	// ComplianceFlagSonetReachSpecifierBit2 SONET reach specifier bit 2
 	ComplianceFlagSonetReachSpecifierBit2
-    // ComplianceFlagOC48LongReach OC-48, long reach
+	// ComplianceFlagOC48LongReach OC-48, long reach
 	ComplianceFlagOC48LongReach
-    // ComplianceFlagOC48IntermediateReach OC-48, intermediate reach
+	// ComplianceFlagOC48IntermediateReach OC-48, intermediate reach
 	ComplianceFlagOC48IntermediateReach
-    // ComplianceFlagOC48ShortReach OC-48, short reach
+	// ComplianceFlagOC48ShortReach OC-48, short reach
 	ComplianceFlagOC48ShortReach
-    // ComplianceFlagOC12SingleModeLongReach OC-12, single mode, long reach
+	// ComplianceFlagOC12SingleModeLongReach OC-12, single mode, long reach
 	ComplianceFlagOC12SingleModeLongReach
-    // ComplianceFlagOC12SingleModeIntermediateReach OC-12, single mode, intermediate reach
+	// ComplianceFlagOC12SingleModeIntermediateReach OC-12, single mode, intermediate reach
 	ComplianceFlagOC12SingleModeIntermediateReach
-    // ComplianceFlagOC12ShortReach OC-12, short reach
+	// ComplianceFlagOC12ShortReach OC-12, short reach
 	ComplianceFlagOC12ShortReach
-    // ComplianceFlagOC3SingleModeLongReach OC-3, single mode, long reach
+	// ComplianceFlagOC3SingleModeLongReach OC-3, single mode, long reach
 	ComplianceFlagOC3SingleModeLongReach
-    // ComplianceFlagOC3SingleModeIntermediateReach OC-3, single mode, intermediate reach
+	// ComplianceFlagOC3SingleModeIntermediateReach OC-3, single mode, intermediate reach
 	ComplianceFlagOC3SingleModeIntermediateReach
-    // ComplianceFlagOC3SingleModeShortReach OC-3, single mode, short reach
+	// ComplianceFlagOC3SingleModeShortReach OC-3, single mode, short reach
 	ComplianceFlagOC3SingleModeShortReach
 
-
 	/* Ethernet ComplianceFlag Codes */
-    
-    // ComplianceFlagBasePX BASE-PX
+
+	// ComplianceFlagBasePX BASE-PX
 	ComplianceFlagBasePX
-    // ComplianceFlagBaseBX10 BASE-BX10
+	// ComplianceFlagBaseBX10 BASE-BX10
 	ComplianceFlagBaseBX10
-    // ComplianceFlag100BaseFX 100BASE-FX
+	// ComplianceFlag100BaseFX 100BASE-FX
 	ComplianceFlag100BaseFX
-    // ComplianceFlag100BaseLX 100BASE-LX/LX10
+	// ComplianceFlag100BaseLX 100BASE-LX/LX10
 	ComplianceFlag100BaseLX
-    // ComplianceFlag1000BaseT 1000BaseT
+	// ComplianceFlag1000BaseT 1000BaseT
 	ComplianceFlag1000BaseT
-    // ComplianceFlag1000BaseCX 1000BaseCX
+	// ComplianceFlag1000BaseCX 1000BaseCX
 	ComplianceFlag1000BaseCX
-    // ComplianceFlag1000BaseLX 1000BaseLX
+	// ComplianceFlag1000BaseLX 1000BaseLX
 	ComplianceFlag1000BaseLX
-    // ComplianceFlag1000BaseSX 1000BaseSX
+	// ComplianceFlag1000BaseSX 1000BaseSX
 	ComplianceFlag1000BaseSX
 
+	/* Fibre Channel Link Length */
 
-    /* Fibre Channel Link Length */
-    
-    // ComplianceFlagVeryLongDistance very long distance (V)
+	// ComplianceFlagVeryLongDistance very long distance (V)
 	ComplianceFlagVeryLongDistance
-    // ComplianceFlagShortDistance short distance (S)
+	// ComplianceFlagShortDistance short distance (S)
 	ComplianceFlagShortDistance
-    // ComplianceFlagIntermediateDistance intermediate distance (I)
+	// ComplianceFlagIntermediateDistance intermediate distance (I)
 	ComplianceFlagIntermediateDistance
-    // ComplianceFlagLongDistance long distance (L)
+	// ComplianceFlagLongDistance long distance (L)
 	ComplianceFlagLongDistance
-    // ComplianceFlagMediumDistance medium distance (M)
+	// ComplianceFlagMediumDistance medium distance (M)
 	ComplianceFlagMediumDistance
 
-
 	/* Fibre Channel Technology */
-    
-    // ComplianceFlagShortwaveLaserSA Shortwave laser, linear Rx (SA)
+
+	// ComplianceFlagShortwaveLaserSA Shortwave laser, linear Rx (SA)
 	ComplianceFlagShortwaveLaserSA
-    // ComplianceFlagLongwaveLaserLC Longwave laser (LC)
+	// ComplianceFlagLongwaveLaserLC Longwave laser (LC)
 	ComplianceFlagLongwaveLaserLC
-    // ComplianceFlagElectricalInterEnclosureEL Electrical inter-enclosure (EL)
+	// ComplianceFlagElectricalInterEnclosureEL Electrical inter-enclosure (EL)
 	ComplianceFlagElectricalInterEnclosureEL
-    // ComplianceFlagElectricalIntraEnclosureEL Electrical intra-enclosure (EL)
+	// ComplianceFlagElectricalIntraEnclosureEL Electrical intra-enclosure (EL)
 	ComplianceFlagElectricalIntraEnclosureEL
-    // ComplianceFlagShortwaveLaserWithoutOFC Shortwave laser w/o OFC (SN)
+	// ComplianceFlagShortwaveLaserWithoutOFC Shortwave laser w/o OFC (SN)
 	ComplianceFlagShortwaveLaserWithoutOFC
-    // ComplianceFlagShortwaveLaserWithOFC Shortwave laser with OFC (SL)
+	// ComplianceFlagShortwaveLaserWithOFC Shortwave laser with OFC (SL)
 	ComplianceFlagShortwaveLaserWithOFC
-    // ComplianceFlagLongwaveLaserLL Longwave laser (LL)
+	// ComplianceFlagLongwaveLaserLL Longwave laser (LL)
 	ComplianceFlagLongwaveLaserLL
 
-
 	/* SFP+ Technology */
-    
-    // ComplianceFlagActiveCable Actice Cable
+
+	// ComplianceFlagActiveCable Actice Cable
 	ComplianceFlagActiveCable
-    // ComplianceFlagPassiveCable Passive Cable
+	// ComplianceFlagPassiveCable Passive Cable
 	ComplianceFlagPassiveCable
 
-
 	/* Fibre Channel Transmission Media */
-    
-    // ComplianceFlagTwinAxialPair Twin Axial Pair (TP)
+
+	// ComplianceFlagTwinAxialPair Twin Axial Pair (TP)
 	ComplianceFlagTwinAxialPair
-    // ComplianceFlagTwistedPair Twin Axial Pair (TP)
+	// ComplianceFlagTwistedPair Twin Axial Pair (TP)
 	ComplianceFlagTwistedPair
-    // ComplianceFlagMiniatureCoax Miniature Coax (MI)
+	// ComplianceFlagMiniatureCoax Miniature Coax (MI)
 	ComplianceFlagMiniatureCoax
-    // ComplianceFlagVideoCoax Video Coax (TV)
+	// ComplianceFlagVideoCoax Video Coax (TV)
 	ComplianceFlagVideoCoax
-    // ComplianceFlagMultimodeM6 Multimode, 62.5um (M6)
+	// ComplianceFlagMultimodeM6 Multimode, 62.5um (M6)
 	ComplianceFlagMultimodeM6
-    // ComplianceFlagMultimodeM5 Multimode, 50um (M5, M5E)
+	// ComplianceFlagMultimodeM5 Multimode, 50um (M5, M5E)
 	ComplianceFlagMultimodeM5
-    // ComplianceFlagSingleMode Single Mode (SM)
+	// ComplianceFlagSingleMode Single Mode (SM)
 	ComplianceFlagSingleMode
 
-
 	/* FibreChannelSpeed */
-    
-    // ComplianceFlag1200MBps 12000 MBps
+
+	// ComplianceFlag1200MBps 12000 MBps
 	ComplianceFlag1200MBps
-    // ComplianceFlag800MBps 800 MBps
+	// ComplianceFlag800MBps 800 MBps
 	ComplianceFlag800MBps
-    // ComplianceFlag1600MBps 1600 MBps
+	// ComplianceFlag1600MBps 1600 MBps
 	ComplianceFlag1600MBps
-    // ComplianceFlag400MBps 400 MBps
+	// ComplianceFlag400MBps 400 MBps
 	ComplianceFlag400MBps
-    // ComplianceFlag3200MBps 3200 MBps
+	// ComplianceFlag3200MBps 3200 MBps
 	ComplianceFlag3200MBps
-    // ComplianceFlag200MBps 200 MBps
+	// ComplianceFlag200MBps 200 MBps
 	ComplianceFlag200MBps
-    // ComplianceFlag100MBps 100 MBps
+	// ComplianceFlag100MBps 100 MBps
 	ComplianceFlag100MBps
 )
 

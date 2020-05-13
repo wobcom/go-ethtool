@@ -25,16 +25,16 @@ type ethtoolEeprom struct {
 }
 
 const (
-    // Get plug-in module information
-	getModuleInfoIoctl   = 0x00000042
-    // Get plug-in module eeprom
+	// Get plug-in module information
+	getModuleInfoIoctl = 0x00000042
+	// Get plug-in module eeprom
 	getModuleEepromIoctl = 0x00000043
-    // Get EEPROM data
-	getEepromDataIoctl   = 0x0000000b
-    // Set EEPROM data
-	setEepromDataIoctl   = 0x0000000c
-    // Maximum support eeprom length
-	eepromMaxLength      = 32768
+	// Get EEPROM data
+	getEepromDataIoctl = 0x0000000b
+	// Set EEPROM data
+	setEepromDataIoctl = 0x0000000c
+	// Maximum support eeprom length
+	eepromMaxLength = 32768
 )
 
 // WriteEEPROM writes the given data to the given offset

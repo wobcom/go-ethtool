@@ -1,7 +1,7 @@
 package eeprom
 
 import (
-    "encoding/json"
+	"encoding/json"
 	"fmt"
 )
 
@@ -10,19 +10,19 @@ type PowerClass byte
 
 const (
 	_ PowerClass = iota
-    // PowerClass1 up to 1.5 Watts
+	// PowerClass1 up to 1.5 Watts
 	PowerClass1
-    // PowerClass2 up to 2.0 Watts
+	// PowerClass2 up to 2.0 Watts
 	PowerClass2
-    // PowerClass3 up to 2.5 Watts
+	// PowerClass3 up to 2.5 Watts
 	PowerClass3
-    // PowerClass4 up to 3.5 Watts
+	// PowerClass4 up to 3.5 Watts
 	PowerClass4
-    // PowerClass5 up to 4.0 Watts
+	// PowerClass5 up to 4.0 Watts
 	PowerClass5
-    // PowerClass6 up to 4.5 Watts
+	// PowerClass6 up to 4.5 Watts
 	PowerClass6
-    // PowerClass7 up to 5.0 Watts
+	// PowerClass7 up to 5.0 Watts
 	PowerClass7
 )
 

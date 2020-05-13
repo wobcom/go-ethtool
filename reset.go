@@ -5,7 +5,7 @@ import (
 )
 
 const (
-    // Reset hardware
+	// Reset hardware
 	resetIoctl = 0x00000034
 )
 

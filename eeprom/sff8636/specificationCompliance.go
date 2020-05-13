@@ -6,120 +6,121 @@ import (
 
 // SpecificationCompliance maps a Specification to a bool, to indiciate compliance (true) or not (false) to a certain standard
 type SpecificationCompliance map[Specification]bool
+
 // Specification some interface specification
 type Specification int
 
 const (
 	/* 10G / 40G / 100G Ethernet Compliance Codes */
 
-    // Spec10GBaseLRM 10GBASE-LRM
+	// Spec10GBaseLRM 10GBASE-LRM
 	Spec10GBaseLRM Specification = iota
-    // Spec10GBaseLR 10GBASE-LR
+	// Spec10GBaseLR 10GBASE-LR
 	Spec10GBaseLR
-    // Spec10GBaseSR 10GBASE-SR
+	// Spec10GBaseSR 10GBASE-SR
 	Spec10GBaseSR
-    // Spec40GBaseCR4 40GBASE-CR4
+	// Spec40GBaseCR4 40GBASE-CR4
 	Spec40GBaseCR4
-    // Spec40GBaseSR4 40GBASE-SR4
+	// Spec40GBaseSR4 40GBASE-SR4
 	Spec40GBaseSR4
-    // Spec40GBaseLR4 40GBASE-LR4
+	// Spec40GBaseLR4 40GBASE-LR4
 	Spec40GBaseLR4
-    // Spec40GXLPPI 40G Active Cable (XLPPI)
+	// Spec40GXLPPI 40G Active Cable (XLPPI)
 	Spec40GXLPPI
 
 	/* SONET Compliance Codes */
 
-    // SpecOC48LongReach OC 48, long reach
+	// SpecOC48LongReach OC 48, long reach
 	SpecOC48LongReach
-    // SpecOC48IntermediateReach OC 48, intermediate reach
+	// SpecOC48IntermediateReach OC 48, intermediate reach
 	SpecOC48IntermediateReach
-    // SpecOC48ShortReach OC 48, short reach
+	// SpecOC48ShortReach OC 48, short reach
 	SpecOC48ShortReach
 
 	/* SAS/SATA Compliance Codes */
 
-    // SpecSAS24G SAS 24.0 Gbps
+	// SpecSAS24G SAS 24.0 Gbps
 	SpecSAS24G
-    // SpecSAS12G SAS 12.0 Gbps
+	// SpecSAS12G SAS 12.0 Gbps
 	SpecSAS12G
-    // SpecSAS6G SAS 6.0 Gbps
+	// SpecSAS6G SAS 6.0 Gbps
 	SpecSAS6G
-    // SpecSAS3G SAS 3.0 Gbps
+	// SpecSAS3G SAS 3.0 Gbps
 	SpecSAS3G
 
 	/* Gigabit Ethernet Compliance Codes */
 
-    // Spec1000BaseT 1000BASE-T
+	// Spec1000BaseT 1000BASE-T
 	Spec1000BaseT
-    // Spec1000BaseCX 1000BASE-CX
+	// Spec1000BaseCX 1000BASE-CX
 	Spec1000BaseCX
-    // Spec1000BaseLX 1000BASE-LX
+	// Spec1000BaseLX 1000BASE-LX
 	Spec1000BaseLX
-    // Spec1000BaseSX 1000BASE-SX
+	// Spec1000BaseSX 1000BASE-SX
 	Spec1000BaseSX
 
 	/* Fibre Channel Link Length */
 
-    // SpecVeryLongDistance Very long distance (v)
+	// SpecVeryLongDistance Very long distance (v)
 	SpecVeryLongDistance
-    // SpecShortDistance Short distance (S)
+	// SpecShortDistance Short distance (S)
 	SpecShortDistance
-    // SpecIntermediateDistance Intermediate distance (I)
+	// SpecIntermediateDistance Intermediate distance (I)
 	SpecIntermediateDistance
-    // SpecLongDistance Long distance (L)
+	// SpecLongDistance Long distance (L)
 	SpecLongDistance
-    // SpecMediumDistance Medium distance (M)
+	// SpecMediumDistance Medium distance (M)
 	SpecMediumDistance
 
 	/* Fibre Channel Transmitter Technology */
 
-    // SpecLongwaveLaserLC Longwave laser (LC)
+	// SpecLongwaveLaserLC Longwave laser (LC)
 	SpecLongwaveLaserLC
-    // SpecElectricalInterEnclosure Electrical inter-enclosure (EL)
+	// SpecElectricalInterEnclosure Electrical inter-enclosure (EL)
 	SpecElectricalInterEnclosure
-    // SpecElectricalIntraEnclosure Electrical intra-enclosure
+	// SpecElectricalIntraEnclosure Electrical intra-enclosure
 	SpecElectricalIntraEnclosure
-    // SpecShortwaveLaserWithoutOFC Shortwave laser w/o OFC (SN)
+	// SpecShortwaveLaserWithoutOFC Shortwave laser w/o OFC (SN)
 	SpecShortwaveLaserWithoutOFC
-    // SpecShortwaveLaserWithOFC Shortwave laser w OFC (SL)
+	// SpecShortwaveLaserWithOFC Shortwave laser w OFC (SL)
 	SpecShortwaveLaserWithOFC
-    // SpecLongwaveLaserLL Longwave laser (LL)
+	// SpecLongwaveLaserLL Longwave laser (LL)
 	SpecLongwaveLaserLL
 
 	/* Fibre Channel Transmission Media */
 
-    // SpecTwinAxialPair Twin Axial Pair (TP)
+	// SpecTwinAxialPair Twin Axial Pair (TP)
 	SpecTwinAxialPair
-    // SpecShieldedTwistedPair Shielded Twisted Pair (TP)
+	// SpecShieldedTwistedPair Shielded Twisted Pair (TP)
 	SpecShieldedTwistedPair
-    // SpecMiniatureCoax Miniature Coax (MI)
+	// SpecMiniatureCoax Miniature Coax (MI)
 	SpecMiniatureCoax
-    // SpecVideoCoax Video Coax (TV)
+	// SpecVideoCoax Video Coax (TV)
 	SpecVideoCoax
-    // SpecMultimodeM6 Multi-mode 62.5 um (M6)
+	// SpecMultimodeM6 Multi-mode 62.5 um (M6)
 	SpecMultimodeM6
-    // SpecMultimodeM5 Multi-mode 50 um (M5)
+	// SpecMultimodeM5 Multi-mode 50 um (M5)
 	SpecMultimodeM5
-    // SpecMultimodeOM3 Multi-mode 50 um (OM3)
+	// SpecMultimodeOM3 Multi-mode 50 um (OM3)
 	SpecMultimodeOM3
-    // SpecSingleMode Multi-mode 50 um (OM3)
+	// SpecSingleMode Multi-mode 50 um (OM3)
 	SpecSingleMode
 
 	/* Fibre Channel Speed */
-    
-    // Spec1200MBpsPerChannel 1200 MBps (per channel)
+
+	// Spec1200MBpsPerChannel 1200 MBps (per channel)
 	Spec1200MBpsPerChannel
-    // Spec800MBps 800 MBps
+	// Spec800MBps 800 MBps
 	Spec800MBps
-    // Spec1600MBpsPerChannel 1600 MBps (per channel)
+	// Spec1600MBpsPerChannel 1600 MBps (per channel)
 	Spec1600MBpsPerChannel
-    // Spec400MBps 400 MBps
+	// Spec400MBps 400 MBps
 	Spec400MBps
-    // Spec3200MBpsPerChannel 3200 MBps (per channel)
+	// Spec3200MBpsPerChannel 3200 MBps (per channel)
 	Spec3200MBpsPerChannel
-    // Spec200MBps 200 MBps
+	// Spec200MBps 200 MBps
 	Spec200MBps
-    // Spec100MBps 100 MBps
+	// Spec100MBps 100 MBps
 	Spec100MBps
 )
 
@@ -258,7 +259,7 @@ func (s SpecificationCompliance) IsNonOpticalImplementation() bool {
 	return s[Spec40GBaseCR4]
 }
 
-// NewSpecificationCompliance parses [8]byte into a new SpecificationCompliance instance 
+// NewSpecificationCompliance parses [8]byte into a new SpecificationCompliance instance
 func NewSpecificationCompliance(raw [8]byte) SpecificationCompliance {
 	s := SpecificationCompliance{}
 

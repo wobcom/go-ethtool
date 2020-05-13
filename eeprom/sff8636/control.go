@@ -1,6 +1,6 @@
 package sff8636
 
-// Control functions 
+// Control functions
 type Control struct {
 	ChannelControls      [4]ChannelControl
 	PowerClass8Enable    bool

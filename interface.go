@@ -8,7 +8,7 @@ import (
 )
 
 const (
-    // IFNAMSIZ is the maximum length of an interface name
+	// IFNAMSIZ is the maximum length of an interface name
 	IFNAMSIZ = 16
 )
 

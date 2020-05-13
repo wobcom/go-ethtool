@@ -12,53 +12,53 @@ import (
 const (
 	/* Page A0h */
 	/* Base ID Fields */
-	identifierOffset                  = 0x00 /* Type of transceiver */
-	extendedIdentifierOffset         = 0x01 /* Extended identifier of type of transceiver */
-	connectorOffset                   = 0x02 /* Code for connector type */
-	transceiverComplianceOffset      = 0x03 /* Code for electronic or optical compatibility */
-	encodingOffset                    = 0x0B /* Code for high speed serial encoding algorithm */
-	baurateNominalOffset            = 0x0C /* Nominal signalling rate, units of 100 MBd */
-	rateIdentifierOffset             = 0x0D /* Type of rate select functionality */
-	lengthSMFkmOffset               = 0x0E /* Link length supported for single mode fiber, units of km */
-	lengthSMF100mOffset             = 0x0F /*  Link length supported for single mode fiber, units of 100 m */
-	lengthOM2Offset                  = 0x10 /*  Link length supported for 50 um OM2 fiber, units of 10 m */
-	lengthOM1Offset                  = 0x11 /* Link length supported for 62.5 um OM1 fiber, units of 10 m */
-	lengthOM4orCopperOffset = 0x12 /* Link length supported for 50um OM4 fiber, units of 10m. Alternatively copper or direct attach cable, units of m */
-	lengthOM3Offset                  = 0x13 /* Link length supported for 50 um OM3 fiber, units of 10 m */
-	vendorStartOffset                = 0x14 /* SFP vendor name (ASCII) */
-	vendorEndOffset                  = 0x23
-	transceiverComplianceOffset1     = 0x24 /* Code for electronic or optical compatibility */
-	vendorOuiOffset                  = 0x23
-	vendorPnStartOffset             = 0x28 /* Part number provided by SFP vendor (ASCII) */
-	vendorPnEndOfffset               = 0x37
-	vendorRevStartOffset            = 0x38 /* Revision level for part number provided by vendor (ASCII) */
-	vendorRevEndOffset              = 0x3B
-	wavelengthOffset                  = 0x3C /* Laser wavelength (Passive/Active Cable Specification Compliance) */
+	identifierOffset             = 0x00 /* Type of transceiver */
+	extendedIdentifierOffset     = 0x01 /* Extended identifier of type of transceiver */
+	connectorOffset              = 0x02 /* Code for connector type */
+	transceiverComplianceOffset  = 0x03 /* Code for electronic or optical compatibility */
+	encodingOffset               = 0x0B /* Code for high speed serial encoding algorithm */
+	baurateNominalOffset         = 0x0C /* Nominal signalling rate, units of 100 MBd */
+	rateIdentifierOffset         = 0x0D /* Type of rate select functionality */
+	lengthSMFkmOffset            = 0x0E /* Link length supported for single mode fiber, units of km */
+	lengthSMF100mOffset          = 0x0F /*  Link length supported for single mode fiber, units of 100 m */
+	lengthOM2Offset              = 0x10 /*  Link length supported for 50 um OM2 fiber, units of 10 m */
+	lengthOM1Offset              = 0x11 /* Link length supported for 62.5 um OM1 fiber, units of 10 m */
+	lengthOM4orCopperOffset      = 0x12 /* Link length supported for 50um OM4 fiber, units of 10m. Alternatively copper or direct attach cable, units of m */
+	lengthOM3Offset              = 0x13 /* Link length supported for 50 um OM3 fiber, units of 10 m */
+	vendorStartOffset            = 0x14 /* SFP vendor name (ASCII) */
+	vendorEndOffset              = 0x23
+	transceiverComplianceOffset1 = 0x24 /* Code for electronic or optical compatibility */
+	vendorOuiOffset              = 0x23
+	vendorPnStartOffset          = 0x28 /* Part number provided by SFP vendor (ASCII) */
+	vendorPnEndOfffset           = 0x37
+	vendorRevStartOffset         = 0x38 /* Revision level for part number provided by vendor (ASCII) */
+	vendorRevEndOffset           = 0x3B
+	wavelengthOffset             = 0x3C /* Laser wavelength (Passive/Active Cable Specification Compliance) */
 	/* Extended ID Fields */
-	optionsOffset                    = 0x40 /* Indicates which optional transceiver signals are implemented */
-	uppertBitrateMarginOffset       = 0x42 /* Upper bit rate margin, units of % */
+	optionsOffset                  = 0x40 /* Indicates which optional transceiver signals are implemented */
+	uppertBitrateMarginOffset      = 0x42 /* Upper bit rate margin, units of % */
 	lowerBitrateMarginOffset       = 0x43 /* Lower bit rate margin, units of % */
 	vendorSnStartOffset            = 0x44 /* Serial number provided by vendor (ASCII) */
 	vendorSnEndOffset              = 0x53
 	dateCodeStartOffset            = 0x54 /* Vendor's manufacturing date code */
 	dateCodeEndOffset              = 0x5B
 	diagnosticMonitoringTypeOffset = 0x5C /* Indicates which type of diagnostic monitoring is implemented (if any) in the transceiver (see Table 8-5) */
-	enhancedOptionsOffset           = 0x5D /*  Indicates which optional enhanced features are implemented (if any) in the transceiver (see Table 8-6) */
-	complianceOffset                 = 0x5E /* Indicates which revision of SFF-8472 the transceiver complies with. (see Table 8-8). */
+	enhancedOptionsOffset          = 0x5D /*  Indicates which optional enhanced features are implemented (if any) in the transceiver (see Table 8-6) */
+	complianceOffset               = 0x5E /* Indicates which revision of SFF-8472 the transceiver complies with. (see Table 8-8). */
 
 	/* Page A2h */
 	/* Diagnostic and control/status fields */
-	thresholdsOffset          = 0x100 /* Diagnostic Flag Alarm and Warning Thresholds (see Table 9-5) */
+	thresholdsOffset   = 0x100 /* Diagnostic Flag Alarm and Warning Thresholds (see Table 9-5) */
 	optionalThresholds = 0x128 /* Thresholds for optional Laser Temperature and TEC Current alarms
 	and warnings (see Table 9-5) */
 	externalCalibrationConstantsOffset = 0x138 /* Diagnostic calibration constants for optional External Calibration (see Table 9-6) */
-	diagnosticsOffset                    = 0x160 /* Diagnostic Monitor Data (internally or externally calibrated) (see Table 9-11) */
-	optionalDiagnosticsOffset           = 0x16A /*  Monitor Data for Optional Laser temperature and TEC current (see Table 9-11) */
-	statusControlOffset                 = 0x16E /* Optional Status and Control Bits (see Table 9-11) */
-	alarmFlagsOffset                    = 0x170 /* Diagnostic Alarm Flag Status Bits (see Table 9-12) */
-	unallocatedOffset                    = 0x172 /* SIC! Standard contradicts itself, see Table 9-12 this byte is in use! */
-	cdrUnlockedOffset                   = 0x173 /* SIC! Table 9-12 and Table 4-2 contradict, going for specification in 9-12 because this is precise enough to write an implementation */
-	warningFlagsOffset                  = 0x174 /* Diagnostic Warning Flag Status Bits (see Table 9-12) */
+	diagnosticsOffset                  = 0x160 /* Diagnostic Monitor Data (internally or externally calibrated) (see Table 9-11) */
+	optionalDiagnosticsOffset          = 0x16A /*  Monitor Data for Optional Laser temperature and TEC current (see Table 9-11) */
+	statusControlOffset                = 0x16E /* Optional Status and Control Bits (see Table 9-11) */
+	alarmFlagsOffset                   = 0x170 /* Diagnostic Alarm Flag Status Bits (see Table 9-12) */
+	unallocatedOffset                  = 0x172 /* SIC! Standard contradicts itself, see Table 9-12 this byte is in use! */
+	cdrUnlockedOffset                  = 0x173 /* SIC! Table 9-12 and Table 4-2 contradict, going for specification in 9-12 because this is precise enough to write an implementation */
+	warningFlagsOffset                 = 0x174 /* Diagnostic Warning Flag Status Bits (see Table 9-12) */
 	extendedStatusControlOffset        = 0x176 /* Extended module control and status bytes (see Table 10-1) */
 	userEepromStartOffset              = 0x180 /* User writeable EEPROM */
 	userEepromEndOffset                = 0x1F7

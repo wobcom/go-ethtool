@@ -7,48 +7,48 @@ import (
 )
 
 const (
-	maxNumStrings    = 256
+	maxNumStrings   = 256
 	maxStringLength = 32
 
-    // Get string set info
+	// Get string set info
 	getStringSetInfoIoctl = 0x00000037
-    // Get specified string set
-	getStringSet   = 0x0000001b
+	// Get specified string set
+	getStringSet = 0x0000001b
 )
 
 // StringSet a set of strings used by some ethtool ioctls
 type StringSet uint32
 
 const (
-    // StringSetTest Self-test result names
-	StringSetTest               StringSet = 0
-    // StringSetStats Statistic names
-	StringSetStats              StringSet = 1
-    // StringSetPrivFlag Driver private flag names
-	StringSetPrivFlag           StringSet = 2
-    // StringSetTupleFilters Depracted
-	StringSetTupleFilters       StringSet = 3
-    // StringSetFeatures Device feature names
-	StringSetFeatures           StringSet = 4
-    // StringSetRssHashFuncs RSS hash function names
-	StringSetRssHashFuncs       StringSet = 5
-    // StringSetTunables Not documented in the kernel's source code
-	StringSetTunables           StringSet = 6
-    // StringSetPhyStats PHY Statistic names
-	StringSetPhyStats           StringSet = 7
-    // StringSetPhyTunables PPHY tunables names
-	StringSetPhyTunables        StringSet = 8
-    // StringSetLinkModes link mode names
-	StringSetLinkModes          StringSet = 9
-    // StringSetMsgClasses debug message class names
-	StringSetMsgClasses         StringSet = 10
-    // StringSetWolModes wake-on-lan modes
-	StringSetWolModes           StringSet = 11
-    // StringSetSofTimestamping SOF_TIMESTAMPING_* flags
-	StringSetSofTimestamping    StringSet = 12
-    // StringSetTimestampTxTypes timestamping Tx types
-	StringSetTimestampTxTypes   StringSet = 13
-    // StringSetTimestampRxFilters timestamping Rx filters
+	// StringSetTest Self-test result names
+	StringSetTest StringSet = 0
+	// StringSetStats Statistic names
+	StringSetStats StringSet = 1
+	// StringSetPrivFlag Driver private flag names
+	StringSetPrivFlag StringSet = 2
+	// StringSetTupleFilters Depracted
+	StringSetTupleFilters StringSet = 3
+	// StringSetFeatures Device feature names
+	StringSetFeatures StringSet = 4
+	// StringSetRssHashFuncs RSS hash function names
+	StringSetRssHashFuncs StringSet = 5
+	// StringSetTunables Not documented in the kernel's source code
+	StringSetTunables StringSet = 6
+	// StringSetPhyStats PHY Statistic names
+	StringSetPhyStats StringSet = 7
+	// StringSetPhyTunables PPHY tunables names
+	StringSetPhyTunables StringSet = 8
+	// StringSetLinkModes link mode names
+	StringSetLinkModes StringSet = 9
+	// StringSetMsgClasses debug message class names
+	StringSetMsgClasses StringSet = 10
+	// StringSetWolModes wake-on-lan modes
+	StringSetWolModes StringSet = 11
+	// StringSetSofTimestamping SOF_TIMESTAMPING_* flags
+	StringSetSofTimestamping StringSet = 12
+	// StringSetTimestampTxTypes timestamping Tx types
+	StringSetTimestampTxTypes StringSet = 13
+	// StringSetTimestampRxFilters timestamping Rx filters
 	StringSetTimestampRxFilters StringSet = 14
 )
 
@@ -58,17 +58,17 @@ var existingStringSets = []StringSet{
 	StringSetMsgClasses, StringSetWolModes, StringSetSofTimestamping, StringSetTimestampTxTypes, StringSetTimestampRxFilters}
 
 type ethtoolGStrings struct {
-	cmd        uint32
+	cmd       uint32
 	stringSet uint32
-	length     uint32
-	data       [maxNumStrings * maxStringLength]byte
+	length    uint32
+	data      [maxNumStrings * maxStringLength]byte
 }
 
 type ethtoolSsetInfo struct {
-	cmd       uint32
-	reserved  uint32
+	cmd      uint32
+	reserved uint32
 	ssetMask uint64
-	data      uint32
+	data     uint32
 }
 
 // GetStringSet retrieves the given StringSet and returns a string slice
@@ -83,10 +83,10 @@ func (i *Interface) GetStringSet(set StringSet) ([]string, error) {
 	}
 
 	gStrings := ethtoolGStrings{
-		cmd:        getStringSet,
+		cmd:       getStringSet,
 		stringSet: uint32(set),
-		length:     length,
-		data:       [maxNumStrings * maxStringLength]byte{},
+		length:    length,
+		data:      [maxNumStrings * maxStringLength]byte{},
 	}
 
 	if err := i.performIoctl(uintptr(unsafe.Pointer(&gStrings))); err != nil {
@@ -103,7 +103,7 @@ func (i *Interface) GetStringSet(set StringSet) ([]string, error) {
 // GetStringSetLength gets the length of a given StringSet
 func (i *Interface) GetStringSetLength(set StringSet) (uint32, error) {
 	setInfo := ethtoolSsetInfo{
-		cmd:       getStringSetInfoIoctl,
+		cmd:      getStringSetInfoIoctl,
 		ssetMask: 1 << uint32(set),
 	}
 

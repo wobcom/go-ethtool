@@ -1,7 +1,7 @@
 package sff8636
 
 import (
-    "encoding/json"
+	"encoding/json"
 	"fmt"
 )
 
@@ -9,9 +9,9 @@ import (
 type ExtendedRateSelectCompliance byte
 
 const (
-    // ExtendedRateSelectComplianceVer1 Rate Select Version 1 
+	// ExtendedRateSelectComplianceVer1 Rate Select Version 1
 	ExtendedRateSelectComplianceVer1 ExtendedRateSelectCompliance = 1
-    // ExtendedRateSelectComplianceVer2 Rate Select Version 2
+	// ExtendedRateSelectComplianceVer2 Rate Select Version 2
 	ExtendedRateSelectComplianceVer2 ExtendedRateSelectCompliance = 2
 )
 

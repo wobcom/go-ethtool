@@ -1,7 +1,7 @@
 package eeprom
 
 import (
-    "encoding/json"
+	"encoding/json"
 	"fmt"
 )
 

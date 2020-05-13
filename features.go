@@ -8,7 +8,7 @@ import (
 )
 
 const (
-    // Get device offload settings
+	// Get device offload settings
 	getFeatures = 0x0000003a
 )
 
@@ -17,9 +17,9 @@ const (
 )
 
 type ethtoolGetFeaturesBlock struct {
-	available     uint32
-	requested     uint32
-	active        uint32
+	available    uint32
+	requested    uint32
+	active       uint32
 	neverChanged uint32
 }
 

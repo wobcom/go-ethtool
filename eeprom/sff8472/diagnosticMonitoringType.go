@@ -16,9 +16,9 @@ type DiagnosticMonitoringType struct {
 type ReceivedPowerMeasurementType bool
 
 const (
-    // ReceivedPowerMeasurementTypeOMA OMA
-	ReceivedPowerMeasurementTypeOMA          ReceivedPowerMeasurementType = false
-    // ReceivedPowerMeasurementTypeAveragePower Average power
+	// ReceivedPowerMeasurementTypeOMA OMA
+	ReceivedPowerMeasurementTypeOMA ReceivedPowerMeasurementType = false
+	// ReceivedPowerMeasurementTypeAveragePower Average power
 	ReceivedPowerMeasurementTypeAveragePower ReceivedPowerMeasurementType = true
 )
 

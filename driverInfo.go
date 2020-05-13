@@ -6,23 +6,23 @@ import (
 )
 
 const (
-    // GetDriverInfoIoctl ioctl command number for "Get driver info"
+	// GetDriverInfoIoctl ioctl command number for "Get driver info"
 	GetDriverInfoIoctl = 0x00000003
 )
 
 type ethtoolDrvInfo struct {
-	cmd          uint32
-	driver       [32]byte
-	version      [32]byte
-	fwVersion    [32]byte
-	busInfo      [32]byte
-	eromVersion  [32]byte
-	reserved2    [12]byte
-	nPrivFlags   uint32
-	nStats       uint32
-	testinfoLen  uint32
-	eedumpLen    uint32
-	regdumpLen   uint32
+	cmd         uint32
+	driver      [32]byte
+	version     [32]byte
+	fwVersion   [32]byte
+	busInfo     [32]byte
+	eromVersion [32]byte
+	reserved2   [12]byte
+	nPrivFlags  uint32
+	nStats      uint32
+	testinfoLen uint32
+	eedumpLen   uint32
+	regdumpLen  uint32
 }
 
 // DriverInfo network interface driver information

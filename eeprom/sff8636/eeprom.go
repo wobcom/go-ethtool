@@ -96,8 +96,8 @@ const (
 	deviceTechnologyOffset = 0x93
 
 	// Free side device vendor name (ASCII)
-	vendorNameStartOffset     = 0x94
-	vendorNameEndOffset = 0xA3
+	vendorNameStartOffset = 0x94
+	vendorNameEndOffset   = 0xA3
 
 	// Extended Module codes for InfiniBand (See Table
 	// 6-20 )
@@ -108,13 +108,13 @@ const (
 
 	// Part number provided by free side device
 	// vendor(ASCII)
-	vendorPnStartOffset     = 0xA8
-	vendorPnEndOffset = 0xB7
+	vendorPnStartOffset = 0xA8
+	vendorPnEndOffset   = 0xB7
 
 	// Revision level for part number provided by the
 	// vendor(ASCII)
-	vendorRevStartOffset     = 0xB8
-	vendorRevEndOffset = 0xB9
+	vendorRevStartOffset = 0xB8
+	vendorRevEndOffset   = 0xB9
 
 	// Nominal laser wavelength (wavelength=value/20 in
 	// nm) or copper cable attenuation in dB at 2.5 GHz
@@ -161,12 +161,12 @@ const (
 	optionsOffset = 0xC1
 
 	// Serial number provided by vendor (ASCII)
-	vendorSnStartOffset     = 0xC4
-	vendorSnEndOffset = 0xD3
+	vendorSnStartOffset = 0xC4
+	vendorSnEndOffset   = 0xD3
 
 	// Vendor's manufacturing date code
-	vendorDateCodeStartOffset     = 0xD4
-	vendorDateCodeEndOffset = 0xDB
+	vendorDateCodeStartOffset = 0xD4
+	vendorDateCodeEndOffset   = 0xDB
 
 	// Indicates which type of diagnostic monitoring is
 	// implemented (if any) in the free side device. Bit 1,0
@@ -233,7 +233,7 @@ type EEPROM struct {
 	Thresholds *Thresholds
 }
 
-// NewEEPROM parses a byte slice of at least length 512 into a new EEPROM instance 
+// NewEEPROM parses a byte slice of at least length 512 into a new EEPROM instance
 func NewEEPROM(raw []byte) (*EEPROM, error) {
 	if len(raw) < 512 {
 		return nil, errors.New("SFF-8636 requires EEPROM to be at least of 512 bytes length")

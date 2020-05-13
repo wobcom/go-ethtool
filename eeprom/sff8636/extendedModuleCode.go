@@ -2,21 +2,22 @@ package sff8636
 
 // ExtendedModuleCodeValues maps a ExtendedModuleCode to a bool to indicate support of a electronic or optical interface for InfiniBand
 type ExtendedModuleCodeValues map[ExtendedModuleCode]bool
+
 // ExtendedModuleCode electronic or optical interface for InfiniBand
 type ExtendedModuleCode int
 
 const (
-    // ExtendedModuleCodeHDR HDR
+	// ExtendedModuleCodeHDR HDR
 	ExtendedModuleCodeHDR ExtendedModuleCode = iota
-    // ExtendedModuleCodeEDR EDR
+	// ExtendedModuleCodeEDR EDR
 	ExtendedModuleCodeEDR
-    // ExtendedModuleCodeFDR FDR
+	// ExtendedModuleCodeFDR FDR
 	ExtendedModuleCodeFDR
-    // ExtendedModuleCodeQDR QDR
+	// ExtendedModuleCodeQDR QDR
 	ExtendedModuleCodeQDR
-    // ExtendedModuleCodeDDR DDR
+	// ExtendedModuleCodeDDR DDR
 	ExtendedModuleCodeDDR
-    // ExtendedModuleCodeSDR SDR
+	// ExtendedModuleCodeSDR SDR
 	ExtendedModuleCodeSDR
 )
 
