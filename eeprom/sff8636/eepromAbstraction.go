@@ -40,11 +40,11 @@ func (e *EEPROM) GetSupportedLinkLengths() map[string]float64 {
 		}
 	}
 	return map[string]float64{
-		"SMF(km)": float64(e.LengthSMF),
-		"OM1":     float64(e.LengthOM1),
-		"OM2":     float64(e.LengthOM2),
-		"OM3":     float64(e.LengthOM3),
-		"OM4":     float64(e.LengthOM4ActiveOrPassiveCable),
+		"SMF": float64(e.LengthSMF),
+		"OM1": float64(e.LengthOM1),
+		"OM2": float64(e.LengthOM2),
+		"OM3": float64(e.LengthOM3),
+		"OM4": float64(e.LengthOM4ActiveOrPassiveCable),
 	}
 }
 
