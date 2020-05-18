@@ -102,6 +102,13 @@ func (e *EEPROM) GetLasers() []eeprom.Laser {
 	if e.TransceiverCompliance.IsSFPCableImplementation() {
 		return []eeprom.Laser{}
 	}
+    if !e.DiagnosticMonitoringType.DiagnosticMonitoringImplemented {
+        return []eeprom.Laser{
+            &Laser {
+                MonitoringSupported: false,
+            },
+        }
+    }
 	return []eeprom.Laser{
 		&Laser{
 			MonitoringSupported: e.DiagnosticMonitoringType.DiagnosticMonitoringImplemented,
