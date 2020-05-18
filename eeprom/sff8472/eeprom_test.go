@@ -144,6 +144,19 @@ func TestParseEEPROMwithoutMonitoring(t *testing.T) {
     eeprom := getEEPROM2(t)
 
     assertFloat64(t, eeprom.GetWavelength(), 0, "eeprom.GetWavelength")
+    lasers := eeprom.GetLasers()
+    assertInt(t, len(lasers), 1, "len(lasers)")
+    laser := lasers[0]
+    _, err := laser.GetBias()
+    assertString(t, err.Error(), "This module does not implement monitoring", "err.Error")
+    _, err = laser.GetRxPower()
+    assertString(t, err.Error(), "This module does not implement monitoring", "err.Error")
+    _, err = laser.GetTxPower()
+    assertString(t, err.Error(), "This module does not implement monitoring", "err.Error")
+    _, err = eeprom.GetModuleTemperature()
+    assertString(t, err.Error(), "Monitoring not implemented by module", "err.Error")
+    _, err = eeprom.GetModuleVoltage()
+    assertString(t, err.Error(), "Monitoring not implemented by module", "err.Error")
 }
 
 func TestParseEEPROMTooShort(t *testing.T) {
