@@ -60,10 +60,7 @@ func parseFloatingPoint(raw [4]byte) float64 {
 
 func parseSignedDecimal(msb byte, lsb byte) float64 {
 	e := float64(int8(msb))
-	if e > 0 {
-		return e + float64(lsb)/256.0
-	}
-	return e - float64(lsb)/256.0
+	return e + float64(lsb)/256.0
 }
 
 func parseUnsignedDecimal(msb byte, lsb byte) float64 {
