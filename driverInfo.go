@@ -2,6 +2,7 @@ package ethtool
 
 import (
 	"bytes"
+	"gitlab.com/wobcom/ethtool/util"
 	"unsafe"
 )
 
@@ -47,11 +48,11 @@ type DriverInfo struct {
 
 func newDriverInfo(ethtoolDrvInfo *ethtoolDrvInfo) *DriverInfo {
 	return &DriverInfo{
-		DriverName:          string(bytes.Trim(ethtoolDrvInfo.driver[:], "\x00")),
-		DriverVersion:       string(bytes.Trim(ethtoolDrvInfo.version[:], "\x00")),
-		FirmwareVersion:     string(bytes.Trim(ethtoolDrvInfo.fwVersion[:], "\x00")),
-		BusInfo:             string(bytes.Trim(ethtoolDrvInfo.busInfo[:], "\x00")),
-		ExpansionRomVersion: string(bytes.Trim(ethtoolDrvInfo.eromVersion[:], "\x00")),
+		DriverName:          util.GetValidUtf8String(bytes.Trim(ethtoolDrvInfo.driver[:], "\x00")),
+		DriverVersion:       util.GetValidUtf8String(bytes.Trim(ethtoolDrvInfo.version[:], "\x00")),
+		FirmwareVersion:     util.GetValidUtf8String(bytes.Trim(ethtoolDrvInfo.fwVersion[:], "\x00")),
+		BusInfo:             util.GetValidUtf8String(bytes.Trim(ethtoolDrvInfo.busInfo[:], "\x00")),
+		ExpansionRomVersion: util.GetValidUtf8String(bytes.Trim(ethtoolDrvInfo.eromVersion[:], "\x00")),
 		EEPROMLength:        ethtoolDrvInfo.eedumpLen,
 		RegDumpLength:       ethtoolDrvInfo.regdumpLen,
 	}

@@ -89,7 +89,7 @@ func (e *EEPROM) GetWavelength() float64 {
 
 // SupportsMonitoring implements eeprom.EEPROM interface's SupportsMonitoring function
 func (e *EEPROM) SupportsMonitoring() bool {
-	return e.DiagnosticMonitoringType.DiagnosticMonitoringImplemented
+	return e.DiagnosticMonitoringType.DiagnosticMonitoringImplemented && len(e.Raw) >= 512
 }
 
 // GetModuleTemperature implements eeprom.EEPROM interface's GetModuleTemperature function

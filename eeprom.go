@@ -6,6 +6,11 @@ import (
 	"gitlab.com/wobcom/ethtool/eeprom"
 	"gitlab.com/wobcom/ethtool/eeprom/sff8472"
 	"gitlab.com/wobcom/ethtool/eeprom/sff8636"
+	"gitlab.com/wobcom/ethtool/util"
+	"strings"
+	"time"
+	"unicode"
+	"unicode/utf8"
 	"unsafe"
 )
 
@@ -66,34 +71,57 @@ func (i *Interface) WriteEEPROM(data []byte, offset uint32) error {
 	return nil
 }
 
+func isASCII(s []byte) bool {
+	for _, c := range s {
+		if c > unicode.MaxASCII {
+			return false
+		}
+	}
+	return true
+}
+
 func (i *Interface) getEEPROM() (eeprom.EEPROM, error) {
 	ethtoolModInfo, err := i.getEEPROMModuleInfo()
 	if err != nil {
 		return nil, errors.Wrapf(err, "Could not retrieve module info for interface %s", i.Name)
 	}
 
-	if ethtoolModInfo.Length == 0 {
-		return nil, errors.New("EERPOM of length 0 reported")
-	}
+	for retryCount := 0; retryCount < 3; retryCount++ {
+		if ethtoolModInfo.Length == 0 {
+			err = errors.New("EERPOM of length 0 reported")
+			continue
+		}
 
-	ethtoolEeprom, err := i.getModuleEEPROM(ethtoolModInfo.Length)
-	if err != nil {
-		return nil, errors.Wrapf(err, "Could not retrieve module raw data")
-	}
+		ethtoolEeprom, err := i.getModuleEEPROM(ethtoolModInfo.Length)
+		if err != nil {
+			continue
+		}
 
-	eepromType := eeprom.Type(ethtoolModInfo.EepromType)
-	data := ethtoolEeprom.Data[:ethtoolModInfo.Length]
+		eepromType := eeprom.Type(ethtoolModInfo.EepromType)
+		data := ethtoolEeprom.Data[:ethtoolModInfo.Length]
 
-	switch eepromType {
-	case eeprom.TypeSFF8472:
-		return sff8472.NewEEPROM(data)
-	case eeprom.TypeSFF8436:
-		return sff8636.NewEEPROM(data)
-	case eeprom.TypeSFF8636:
-		return sff8636.NewEEPROM(data)
-	default:
-		return nil, errors.New(fmt.Sprintf("EEPROM Type %v not supported", eepromType.String()))
+		switch eepromType {
+		case eeprom.TypeSFF8472:
+			// bypasses a glitch (maybe in the sx_netdev driver?) which would return just garbage
+			rawVendorName := data[0x14:0x23]
+			if !utf8.Valid(rawVendorName) || strings.HasPrefix(util.GetValidUtf8String(rawVendorName), "/") {
+				fmt.Printf("Avoiding weird SFF8472 vendor name for interface  %s\n", i.Name)
+			}
+			e, err := sff8472.NewEEPROM(data)
+			if err != nil {
+				fmt.Printf("sff8472: %s\n", err.Error())
+			}
+			return e, err
+		case eeprom.TypeSFF8436:
+			return sff8636.NewEEPROM(data)
+		case eeprom.TypeSFF8636:
+			return sff8636.NewEEPROM(data)
+		default:
+			err = fmt.Errorf("EEPROM Type %v not supported", eepromType.String())
+			continue
+		}
 	}
+	return nil, fmt.Errorf("Could not read EEPROM for interface %s after 3 tries", i.Name)
 }
 
 func (i *Interface) getEEPROMModuleInfo() (*ethtoolModinfo, error) {
@@ -115,5 +143,7 @@ func (i *Interface) getModuleEEPROM(length uint32) (*ethtoolEeprom, error) {
 	if err := i.performIoctl(uintptr(unsafe.Pointer(ethtoolEeprom))); err != nil {
 		return nil, errors.Wrapf(err, "Error running ioctl getModuleEepromIoctl")
 	}
+
+	time.Sleep(5 * time.Millisecond)
 	return ethtoolEeprom, nil
 }

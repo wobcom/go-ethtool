@@ -173,6 +173,20 @@ func (e ExtendedSpecificationCompliance) String() string {
 	}[e]
 }
 
+// IsOpticalImplementation returns true in case of an optical implementation and false in case of a copper one
+func (e ExtendedSpecificationCompliance) IsOpticalImplementation() bool {
+	if e == ExtendedSpecificationCompliance100GBaseCR425GBaseCRCA25GL50GBaseCR2Clause91FEC ||
+		e == ExtendedSpecificationCompliance25GBaseCRCA25GS50GBaseCR2Clause74FEC ||
+		e == ExtendedSpecificationCompliance25GBaseCRCA25GN50GBaseCR2NoFEC ||
+		e == ExtendedSpecificationCompliance50GBaseCR100GBaseCR2200GBaseCR4 ||
+		e == ExtendedSpecificationCompliance100GACC25GAUI ||
+		e == ExtendedSpecificationComplianceACC50GAUI100GAUI2200GAUI4BER6 ||
+		e == ExtendedSpecificationComplianceACC50GAUI100GAUI2200GAUI4BER4 {
+		return false
+	}
+	return true
+}
+
 // MarshalJSON implements the encoding/json/Marshaler interface's MarshalJSON function
 func (e ExtendedSpecificationCompliance) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]string{

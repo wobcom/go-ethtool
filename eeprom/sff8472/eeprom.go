@@ -2,11 +2,19 @@ package sff8472
 
 import (
 	"errors"
+	"fmt"
 	"gitlab.com/wobcom/ethtool/eeprom"
 	"gitlab.com/wobcom/ethtool/eeprom/sff8024"
 	"gitlab.com/wobcom/ethtool/eeprom/sff8079"
 	"strings"
 )
+
+// ChecksumError occurs when the data read from the EEPROM does not a have a valid checksum as defined in SFF8472
+type ChecksumError struct{}
+
+func (c *ChecksumError) Error() string { return "Invalid checksum" }
+// NewChecksumError returns a new ChecksumError instance
+func NewChecksumError() *ChecksumError { return &ChecksumError{} }
 
 /* Memory offsets */
 const (
@@ -45,6 +53,7 @@ const (
 	diagnosticMonitoringTypeOffset = 0x5C /* Indicates which type of diagnostic monitoring is implemented (if any) in the transceiver (see Table 8-5) */
 	enhancedOptionsOffset          = 0x5D /*  Indicates which optional enhanced features are implemented (if any) in the transceiver (see Table 8-6) */
 	complianceOffset               = 0x5E /* Indicates which revision of SFF-8472 the transceiver complies with. (see Table 8-8). */
+	checksumOffset                 = 0x5F /* Byte 95 contains the low order 8 bits of the sum of bytes 0-94 */
 
 	/* Page A2h */
 	/* Diagnostic and control/status fields */
@@ -66,6 +75,7 @@ const (
 
 // EEPROM implementation is based on SFF-8462 Rev. 12.3
 type EEPROM struct {
+	Raw []byte
 	/* Page A0h */
 	/* Base ID Fields */
 	Identifier                sff8024.Identifier
@@ -120,6 +130,7 @@ func NewEEPROM(raw []byte) (*EEPROM, error) {
 	}
 
 	e := &EEPROM{
+		Raw: raw,
 		/* Page A0h */
 		/* Base ID Fields */
 		Identifier:         sff8024.Identifier(raw[identifierOffset]),
@@ -183,6 +194,14 @@ func NewEEPROM(raw []byte) (*EEPROM, error) {
 	}
 
 	if len(raw) >= 512 {
+		sum := uint(0)
+		for i := 0x100; i < 0x15F; i++ {
+			sum += uint(raw[i])
+		}
+		if byte(sum&0xFF) != raw[0x15F] {
+			fmt.Printf("Expected checksum %02X, got %X\n", raw[checksumOffset], sum)
+			return nil, NewChecksumError()
+		}
 		e.Thresholds = NewThresholds([40]byte{
 			raw[thresholdsOffset+0],
 			raw[thresholdsOffset+1],
@@ -331,7 +350,7 @@ func NewEEPROM(raw []byte) (*EEPROM, error) {
 	}
 
 	// apply calibration data if necessary
-	if e.DiagnosticMonitoringType.ExternallyCalibrated {
+	if e.DiagnosticMonitoringType.ExternallyCalibrated && len(raw) >= 512 {
 		e.calibrate()
 	}
 

@@ -3,8 +3,12 @@ package sff8472
 import (
 	"bytes"
 	"encoding/binary"
+	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"gitlab.com/wobcom/ethtool/util"
 	"math"
+	"strings"
 )
 
 // Power a power measurement
@@ -27,7 +31,11 @@ func (p Power) MarshalJSON() ([]byte, error) {
 }
 
 func parseString(raw []byte) string {
-	return string(bytes.Trim(raw, "\x00"))
+	s := util.GetValidUtf8String(bytes.Trim(raw, "\x00"))
+	if strings.HasPrefix(s, "/") {
+		fmt.Printf("Parse weird string %s, hex: %s", s, hex.EncodeToString(raw))
+	}
+	return s
 }
 
 func parseWavelength(msb byte, lsb byte) float64 {

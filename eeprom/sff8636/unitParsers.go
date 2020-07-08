@@ -2,8 +2,12 @@ package sff8636
 
 import (
 	"bytes"
+	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"gitlab.com/wobcom/ethtool/util"
 	"math"
+	"strings"
 )
 
 // Power type for power measurements, provides conversion to dBm when JSON serialized
@@ -42,7 +46,11 @@ func parseCurrent(msb byte, lsb byte) float64 {
 }
 
 func parseString(raw []byte) string {
-	return string(bytes.Trim(raw, "\x00"))
+	s := util.GetValidUtf8String(bytes.Trim(raw, "\x00"))
+	if strings.HasPrefix(s, "/") {
+		fmt.Printf("Parse weird string %s, hex: %s \n", s, hex.EncodeToString(raw))
+	}
+	return s
 }
 
 func parseWavelength(msb byte, lsb byte) float64 {
