@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"gitlab.com/wobcom/ethtool/eeprom"
-	"unsafe"
 )
 
 const (
@@ -64,7 +63,7 @@ func (i *Interface) performIoctl(data uintptr) error {
 		ifrData: data,
 	}
 
-	return i.ethtool.PerformIoctl(uintptr(unsafe.Pointer(&ifr)))
+	return i.ethtool.PerformIoctl(&ifr)
 }
 
 type ethtoolArbitraryCommand struct {

@@ -2,7 +2,7 @@ package ethtool
 
 import (
 	"sync"
-
+    "unsafe"
 	"golang.org/x/sys/unix"
 )
 
@@ -31,9 +31,9 @@ func NewEthtool() (*Ethtool, error) {
 }
 
 // PerformIoctl performs an ethtool ioctl and passes the given pointer to the ioctl
-func (e *Ethtool) PerformIoctl(ifr uintptr) error {
+func (e *Ethtool) PerformIoctl(ifr *ifreq) error {
 	e.mu.Lock()
-	_, _, ep := unix.Syscall(unix.SYS_IOCTL, uintptr(e.fd), siocethtool, ifr)
+	_, _, ep := unix.Syscall(unix.SYS_IOCTL, uintptr(e.fd), siocethtool, uintptr(unsafe.Pointer(ifr)))
 	e.mu.Unlock()
 
 	if ep != 0 {
