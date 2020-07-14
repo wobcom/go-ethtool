@@ -1,9 +1,9 @@
 package ethtool
 
 import (
-	"sync"
-    "unsafe"
 	"golang.org/x/sys/unix"
+	"sync"
+	"unsafe"
 )
 
 const (

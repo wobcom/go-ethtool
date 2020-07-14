@@ -13,6 +13,7 @@ import (
 type ChecksumError struct{}
 
 func (c *ChecksumError) Error() string { return "Invalid checksum" }
+
 // NewChecksumError returns a new ChecksumError instance
 func NewChecksumError() *ChecksumError { return &ChecksumError{} }
 
