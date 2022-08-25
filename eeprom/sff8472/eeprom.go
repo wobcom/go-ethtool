@@ -3,9 +3,9 @@ package sff8472
 import (
 	"errors"
 	"fmt"
-	"gitlab.com/wobcom/ethtool/eeprom"
-	"gitlab.com/wobcom/ethtool/eeprom/sff8024"
-	"gitlab.com/wobcom/ethtool/eeprom/sff8079"
+	"github.com/wobcom/go-ethtool/eeprom"
+	"github.com/wobcom/go-ethtool/eeprom/sff8024"
+	"github.com/wobcom/go-ethtool/eeprom/sff8079"
 	"strings"
 )
 

@@ -1,6 +1,6 @@
 package sff8079
 
-import "gitlab.com/wobcom/ethtool/eeprom"
+import "github.com/wobcom/go-ethtool/eeprom"
 
 // Options Transceiver options
 type Options struct {

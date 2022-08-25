@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitlab.com/wobcom/ethtool"
+	"github.com/wobcom/go-ethtool"
 
 	"encoding/json"
 	"flag"

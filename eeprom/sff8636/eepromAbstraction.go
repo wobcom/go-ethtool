@@ -1,8 +1,8 @@
 package sff8636
 
 import (
-	"gitlab.com/wobcom/ethtool/eeprom"
-	"gitlab.com/wobcom/ethtool/eeprom/sff8024"
+	"github.com/wobcom/go-ethtool/eeprom"
+	"github.com/wobcom/go-ethtool/eeprom/sff8024"
 	"strings"
 	"time"
 )

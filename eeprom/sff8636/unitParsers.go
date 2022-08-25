@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"gitlab.com/wobcom/ethtool/util"
+	"github.com/wobcom/go-ethtool/util"
 	"math"
 	"strings"
 )

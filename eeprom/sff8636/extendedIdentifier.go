@@ -1,7 +1,7 @@
 package sff8636
 
 import (
-	"gitlab.com/wobcom/ethtool/eeprom"
+	"github.com/wobcom/go-ethtool/eeprom"
 )
 
 // ExtendedIdentifier provides additional information about the free side device.device contains a CDR function and identifies the power cons

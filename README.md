@@ -22,7 +22,8 @@ go build
 It allows for parsing the EEPROM contents of a given <interface> and dumps them to STDOUT: `./example --interface swp42`
 
 ### Transceiver exporter
-[Prometheus exporter](https://gitlab.com/wobcom/transceiver-exporter) based on this package.
+[Prometheus exporter](https://github.com/wobcom/transceiver-exporter) based on this package.
 
 ## Authors
 * @fluepke
+* @vidister

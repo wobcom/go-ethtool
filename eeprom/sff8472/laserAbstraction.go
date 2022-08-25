@@ -2,7 +2,7 @@ package sff8472
 
 import (
 	"errors"
-	"gitlab.com/wobcom/ethtool/eeprom"
+	"github.com/wobcom/go-ethtool/eeprom"
 )
 
 // Laser a helper struct for implementing eeprom.Laser interface

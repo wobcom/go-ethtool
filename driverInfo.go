@@ -2,7 +2,7 @@ package ethtool
 
 import (
 	"bytes"
-	"gitlab.com/wobcom/ethtool/util"
+	"github.com/wobcom/go-ethtool/util"
 	"unsafe"
 )
 

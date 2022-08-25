@@ -3,7 +3,7 @@ package ethtool
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"gitlab.com/wobcom/ethtool/eeprom"
+	"github.com/wobcom/go-ethtool/eeprom"
 )
 
 const (
